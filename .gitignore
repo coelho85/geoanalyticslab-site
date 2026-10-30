@@ -1,0 +1,11 @@
+.DS_Store
+*.docx
+~$*
+# saved story-map page (not used by the site)
+pictures/kazaGroup.html
+pictures/kazaGroup_files/
+pictures/kazaGrouppic.mhtml
+# originals replaced by web-sized JPEGs
+pictures/wrf.png
+pictures/KAZAmap.png
+pictures/workshopKAZA.png

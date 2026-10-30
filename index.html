@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GeoAnalytics Lab</title>
+<meta name="description" content="GeoAnalytics Lab — geospatial and sustainability consulting from Barcelona. ESG spatial risk and compliance, conservation analysis, deforestation monitoring and GIS capacity building.">
+<meta property="og:title" content="GeoAnalytics Lab">
+<meta property="og:description" content="Geospatial intelligence for sustainable supply chains. EUDR compliance, deforestation monitoring and spatial risk analytics.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geoanalyticslab.com/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f4d3a'/%3E%3Cpath d='M6 20c4-6 8 2 12-4s6-4 8-2' stroke='%23e9c46a' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='18' cy='16' r='2.6' fill='%23f6f3ec'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f3ec;
+    --surface: #fffdf8;
+    --ink: #1c2a24;
+    --muted: #5b6b63;
+    --line: #dcd6c8;
+    --brand: #1f4d3a;
+    --brand-ink: #f6f3ec;
+    --accent: #c98a2b;
+    --contour: rgba(31, 77, 58, 0.14);
+    --max: 1120px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #111815;
+      --surface: #18221e;
+      --ink: #e8eee9;
+      --muted: #9fb0a7;
+      --line: #2a3832;
+      --brand: #7cc4a0;
+      --brand-ink: #0f1613;
+      --accent: #e9b65a;
+      --contour: rgba(124, 196, 160, 0.13);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #111815;
+    --surface: #18221e;
+    --ink: #e8eee9;
+    --muted: #9fb0a7;
+    --line: #2a3832;
+    --brand: #7cc4a0;
+    --brand-ink: #0f1613;
+    --accent: #e9b65a;
+    --contour: rgba(124, 196, 160, 0.13);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 400 17px/1.65 Inter, system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 600; line-height: 1.15; margin: 0; }
+  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+  .eyebrow {
+    font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 14px;
+  }
+
+  /* Nav */
+  header.nav {
+    position: sticky; top: 0; z-index: 10;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 20px; }
+  .logo svg { flex: none; }
+  .logo span b { color: var(--brand); font-weight: 600; }
+  .nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-size: 15px; }
+  .nav ul a { text-decoration: none; color: var(--muted); }
+  .nav ul a:hover { color: var(--ink); }
+  .nav ul .gh a { display: inline-flex; align-items: center; gap: 6px; }
+  @media (max-width: 720px) {
+    .nav ul li:not(:last-child) { display: none; }
+    .nav ul { gap: 16px; align-items: center; }
+  }
+
+  .btn {
+    display: inline-block; padding: 13px 22px; border-radius: 999px;
+    background: var(--brand); color: var(--brand-ink); text-decoration: none;
+    font-weight: 600; font-size: 15px; border: 1px solid var(--brand);
+    transition: transform .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+  .nav .btn { padding: 8px 16px; color: var(--brand-ink); white-space: nowrap; }
+
+  /* Hero */
+  .hero { position: relative; overflow: hidden; padding: 112px 0 104px; }
+  .hero .contours { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .hero .contours path { fill: none; stroke: var(--contour); stroke-width: 1.4; }
+  .hero .wrap { position: relative; }
+  .hero h1 { font-size: clamp(38px, 6vw, 68px); max-width: 15ch; letter-spacing: -0.01em; }
+  .hero h1 em { font-style: italic; color: var(--brand); font-weight: 400; }
+  .hero p.lead { font-size: clamp(18px, 2vw, 21px); color: var(--muted); max-width: 58ch; margin: 24px 0 36px; }
+  .hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; }
+  .coords { margin-top: 56px; font: 500 13px/1 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); letter-spacing: .04em; }
+
+  section { padding: 96px 0; border-top: 1px solid var(--line); }
+  section h2 { font-size: clamp(30px, 4vw, 42px); max-width: 22ch; }
+  .section-intro { color: var(--muted); max-width: 60ch; margin: 16px 0 0; }
+
+  /* Services */
+  .grid { display: grid; gap: 20px; margin-top: 48px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px;
+  }
+  .card .num { font: 500 13px/1 ui-monospace, Menlo, monospace; color: var(--accent); }
+  .card h3 { font-size: 22px; margin: 14px 0 10px; }
+  .card p { margin: 0; color: var(--muted); font-size: 16px; }
+  .card ul { margin: 14px 0 0; padding-left: 18px; color: var(--muted); font-size: 15px; }
+
+  /* Pillars */
+  .pillars { grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 24px; }
+  .pillar { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
+  .pillar figure { margin: 0; position: relative; overflow: hidden; aspect-ratio: 16 / 9; background: var(--line); border-bottom: 1px solid var(--line); }
+  .pillar figure img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .pillar figure.sat img { filter: brightness(2) contrast(1.2) saturate(1.1); }
+  .pillar figcaption { position: absolute; right: 8px; bottom: 8px; font-size: 11px; line-height: 1.3; padding: 3px 8px; border-radius: 6px; background: rgba(0,0,0,.55); color: #fff; }
+  .pillar figcaption a { color: #fff; }
+  .pillar .body { padding: 26px 28px 30px; }
+  .pillar h3 { margin-top: 12px; }
+
+  /* Publications */
+  .pubs { list-style: none; margin: 48px 0 0; padding: 0; border-top: 1px solid var(--line); }
+  .pubs li { border-bottom: 1px solid var(--line); }
+  .pubs a { display: grid; grid-template-columns: 120px 1fr auto; gap: 8px 24px; align-items: baseline; padding: 22px 4px; text-decoration: none; transition: background .15s ease; }
+  .pubs a:hover { background: color-mix(in srgb, var(--brand) 6%, transparent); }
+  .pubs .type { font: 500 12px/1.4 ui-monospace, Menlo, monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+  .pubs h3 { font-size: 20px; line-height: 1.3; }
+  .pubs .meta { display: block; margin-top: 6px; font-size: 15px; color: var(--muted); }
+  .pubs .go { color: var(--brand); font-size: 18px; transition: transform .15s ease; }
+  .pubs a:hover .go { transform: translate(2px, -2px); }
+  @media (max-width: 640px) {
+    .pubs a { grid-template-columns: 1fr auto; }
+    .pubs .type { grid-column: 1 / -1; }
+  }
+
+  /* Partners */
+  .logos { display: grid; gap: 16px; margin-top: 48px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr)); }
+  .logos a { display: flex; align-items: center; justify-content: center; height: 112px; padding: 18px 22px; border-radius: 14px; background: #fff; border: 1px solid var(--line); text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
+  .logos a:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.08); }
+  .logos img { max-width: 100%; max-height: 64px; object-fit: contain; }
+  .logos img.wide { max-height: 44px; }
+  .logos img.big { max-height: 84px; }
+  .logos .wordmark { font: 600 26px/1 Fraunces, Georgia, serif; color: #1f4d3a; letter-spacing: .02em; }
+
+  /* Approach */
+  .steps { display: grid; gap: 32px; margin-top: 48px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); counter-reset: step; }
+  .step { border-top: 2px solid var(--brand); padding-top: 18px; }
+  .step h3 { font-size: 20px; margin-bottom: 8px; }
+  .step h3::before { counter-increment: step; content: "0" counter(step) "  "; font: 500 14px ui-monospace, Menlo, monospace; color: var(--accent); }
+  .step p { margin: 0; color: var(--muted); font-size: 16px; }
+
+  /* About */
+  .about { display: grid; gap: 56px; grid-template-columns: 1.2fr 1fr; align-items: start; }
+  @media (max-width: 860px) { .about { grid-template-columns: 1fr; } }
+  .about p { color: var(--muted); }
+  .about p strong { color: var(--ink); font-weight: 600; }
+  .facts { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
+  .facts li { padding: 18px 24px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; font-size: 15px; }
+  .facts li:last-child { border-bottom: 0; }
+  .facts li span:first-child { color: var(--muted); }
+  .facts li span:last-child { text-align: right; font-weight: 500; }
+
+  .orgs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .orgs span { border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 14px; color: var(--muted); background: var(--surface); }
+
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
+  .tools span { font: 500 13px/1 ui-monospace, Menlo, monospace; padding: 8px 12px; border-radius: 8px; background: color-mix(in srgb, var(--brand) 12%, transparent); color: var(--brand); }
+
+  /* Contact */
+  .contact { background: var(--brand); color: var(--brand-ink); border-radius: 24px; padding: 64px 48px; text-align: center; }
+  .contact h2 { margin: 0 auto; max-width: 20ch; }
+  .contact p { opacity: .85; max-width: 52ch; margin: 18px auto 32px; }
+  .contact .btn { background: var(--brand-ink); color: var(--brand); border-color: var(--brand-ink); }
+  .contact .btn.ghost { background: transparent; color: var(--brand-ink); border-color: color-mix(in srgb, var(--brand-ink) 40%, transparent); }
+  .contact .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  @media (max-width: 600px) { .contact { padding: 48px 24px; } }
+
+  footer { padding: 40px 0 56px; color: var(--muted); font-size: 14px; }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+
+  @media (max-width: 600px) {
+    .wrap { padding: 0 16px; }
+    .hero { padding: 72px 0 64px; }
+    section { padding: 72px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="GeoAnalytics Lab home">
+      <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--brand)"/><path d="M6 20c4-6 8 2 12-4s6-4 8-2" stroke="var(--accent)" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="18" cy="16" r="2.6" fill="var(--brand-ink)"/></svg>
+      <span>GeoAnalytics<b>Lab</b></span>
+    </a>
+    <ul>
+      <li><a href="#services">What we do</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#partners">Partners</a></li>
+      <li><a href="#about">About</a></li>
+      <li class="gh"><a href="https://github.com/coelho85" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a></li>
+      <li><a class="btn" href="#contact">Get in touch</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <svg class="contours" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <path d="M700 300c0-90 90-150 190-150s200 70 200 160-100 150-200 150-190-70-190-160z"/>
+      <path d="M650 300c0-120 115-200 245-200s255 95 255 210-125 200-255 200-245-90-245-210z"/>
+      <path d="M600 305c0-150 140-250 300-250s310 115 310 265-150 250-310 250-300-115-300-265z"/>
+      <path d="M545 310c0-180 165-300 355-300s365 140 365 320-175 300-365 300-355-140-355-320z"/>
+      <path d="M490 315c0-215 190-355 410-355s420 165 420 375-200 355-420 355-410-160-410-375z"/>
+      <path d="M435 320c0-245 215-405 465-405s475 190 475 430-225 405-475 405-465-185-465-430z"/>
+      <path d="M760 300c0-55 60-95 130-95s135 45 135 100-65 95-135 95-130-45-130-100z"/>
+      <path d="M815 300c0-25 30-45 70-45s75 20 75 48-35 45-75 45-70-20-70-48z"/>
+    </svg>
+    <div class="wrap">
+      <p class="eyebrow">Geospatial &amp; sustainability consulting</p>
+      <h1>Seeing land change <em>before</em> it becomes risk.</h1>
+      <p class="lead">GeoAnalytics Lab helps companies, NGOs and public institutions turn satellite data into decisions, from ESG risk and EUDR/CSRD compliance to conservation, deforestation monitoring and GIS training.</p>
+      <div class="ctas">
+        <a class="btn" href="#contact">Start a conversation</a>
+        <a class="btn ghost" href="#services">What we do</a>
+      </div>
+      <p class="coords">41.3874° N, 2.1686° E · Barcelona — working globally</p>
+    </div>
+  </div>
+
+  <section id="services">
+    <div class="wrap">
+      <p class="eyebrow">What we do</p>
+      <h2>Four pillars of spatial evidence.</h2>
+      <p class="section-intro">Each engagement is built around a clear question and ends in something your team can actually use: a pipeline, a risk score, a map, a dashboard or a defensible report.</p>
+      <div class="grid pillars">
+        <article class="card pillar">
+          <figure><img src="pictures/wrf.jpg" alt="WWF Water Risk Filter map showing basin-level water risk across Africa and Asia" style="object-position: center 70%" loading="lazy"></figure>
+          <div class="body">
+            <div class="num">01</div>
+            <h3>ESG spatial risk assessment &amp; compliance</h3>
+            <p>Location-based risk frameworks that combine global ESG datasets with your sites and suppliers, built to meet EUDR, CSRD and other reporting requirements.</p>
+            <ul><li>Supply chain &amp; sourcing risk scoring</li><li>Water, biodiversity &amp; physical climate risk</li><li>EUDR, CSRD/ESRS and TNFD-aligned reporting</li></ul>
+          </div>
+        </article>
+        <article class="card pillar">
+          <figure><img src="pictures/KAZAmap.jpg" alt="Map of the Kavango-Zambezi (KAZA) transfrontier conservation area across five countries" loading="lazy"></figure>
+          <div class="body">
+            <div class="num">02</div>
+            <h3>Spatial analysis for conservation</h3>
+            <p>Mapping and monitoring for conservation programmes, from landscape-scale land cover change to the habitats and species that depend on them.</p>
+            <ul><li>Habitat &amp; biodiversity monitoring</li><li>Land cover &amp; land use change mapping</li><li>Field data collection design &amp; integration</li></ul>
+          </div>
+        </article>
+        <article class="card pillar">
+          <figure class="sat"><img src="pictures/amazon-deforestation.jpg" alt="Satellite image of the fishbone deforestation pattern in Rondônia, Brazilian Amazon" loading="lazy"><figcaption>Rondônia, Brazil · <a href="https://commons.wikimedia.org/wiki/File:Rond%C3%B4nia_Deforestation_(25_July_2016),_Brazil_(34296310700).jpg" target="_blank" rel="noopener">O.V.E.R.V.I.E.W.</a>, CC BY 2.0</figcaption></figure>
+          <div class="body">
+            <div class="num">03</div>
+            <h3>Deforestation monitoring</h3>
+            <p>Plot-level verification against deforestation cutoff dates, with automated alerts and audit-ready evidence, built on scalable remote sensing and ML pipelines.</p>
+            <ul><li>Geolocation &amp; polygon quality checks</li><li>Forest baselines &amp; change detection</li><li>Google Earth Engine &amp; Python pipelines</li></ul>
+          </div>
+        </article>
+        <article class="card pillar">
+          <figure><img src="pictures/workshopKAZA.jpg" alt="Participants of a GIS training workshop for KAZA conservation partners" style="object-position: center 35%" loading="lazy"></figure>
+          <div class="body">
+            <div class="num">04</div>
+            <h3>GIS &amp; capacity building</h3>
+            <p>Hands-on training in ArcGIS, QGIS and Earth Engine for teams that want to build spatial skills in-house and keep the work running.</p>
+            <ul><li>Tailored workshops, on-site or remote</li><li>Workflow automation coaching</li><li>English, Spanish, German, Portuguese</li></ul>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="approach">
+    <div class="wrap">
+      <p class="eyebrow">Approach</p>
+      <h2>Small team, senior expertise, practical results.</h2>
+      <div class="steps">
+        <div class="step"><h3>Scope</h3><p>We define the decision you need to make, the regulation or standard involved, and what a useful answer looks like.</p></div>
+        <div class="step"><h3>Analyse</h3><p>We gather the right satellite, ESG and field data and build transparent, reproducible models.</p></div>
+        <div class="step"><h3>Deliver</h3><p>Results come as maps, scores, dashboards or reports that are clear to non-specialists and defensible to auditors.</p></div>
+        <div class="step"><h3>Embed</h3><p>We hand over code and documentation, and train your team so the work keeps running after we leave.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <p class="eyebrow">Projects &amp; publications</p>
+      <h2>Selected work.</h2>
+      <p class="section-intro">Story maps, reports and papers where Felipe led the spatial analysis and mapping.</p>
+      <ul class="pubs">
+        <li><a href="https://storymaps.arcgis.com/stories/2e3b8c61e23046f2ab0183e8ff36ebf6" target="_blank" rel="noopener">
+          <span class="type">Story map</span>
+          <span><h3>Monitoring habitat change for a sustainable KAZA</h3><span class="meta">Kavango-Zambezi Transfrontier Conservation Area · BFAST time-series change detection</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a href="https://storymaps.arcgis.com/stories/db69e30bc8434330ab9445a200b19709" target="_blank" rel="noopener">
+          <span class="type">Story map</span>
+          <span><h3>KAZA Land Cover 2021</h3><span class="meta">Land cover mapping across five countries of the KAZA landscape</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a href="https://pubmed.ncbi.nlm.nih.gov/33085699/" target="_blank" rel="noopener">
+          <span class="type">Article</span>
+          <span><h3>A climate adaptation strategy for Mai Po Inner Deep Bay Ramsar site: steppingstone to climate proofing the East Asian-Australasian Flyway</h3><span class="meta">Wikramanayake, Or, Costa et al. · PLOS ONE, 2020</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a href="publications/wwf_valuing_rivers__final_.pdf" target="_blank" rel="noopener">
+          <span class="type">Report</span>
+          <span><h3>Valuing Rivers: how the diverse benefits of healthy rivers underpin economies</h3><span class="meta">WWF, 2018 · Spatial analysis and maps · PDF</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a href="publications/wwf_waterstewardship_brief_web_final.pdf" target="_blank" rel="noopener">
+          <span class="type">Brief</span>
+          <span><h3>Water Stewardship Revisited: shifting the narrative from risk to value creation</h3><span class="meta">WWF-Germany, 2018 · Maps · PDF</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+        <li><a href="https://wwf.medium.com/lets-talk-data-new-data-in-wwf-water-risk-filter-will-help-companies-better-assess-risks-in-a-44335e306760" target="_blank" rel="noopener">
+          <span class="type">Blog</span>
+          <span><h3>Let's talk data: new data in the WWF Water Risk Filter helps companies better assess risks</h3><span class="meta">WWF on Medium · Water Risk Filter</span></span>
+          <span class="go" aria-hidden="true">↗</span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="partners">
+    <div class="wrap">
+      <p class="eyebrow">Partners</p>
+      <h2>Organisations we have worked with.</h2>
+      <div class="logos">
+        <a href="https://www.wwf.de/" target="_blank" rel="noopener" title="WWF"><img src="partners/wwf.jpg" alt="WWF" loading="lazy"></a>
+        <a href="https://www.rainforest-alliance.org/" target="_blank" rel="noopener" title="Rainforest Alliance"><img class="big" src="partners/rainForestAlliance.png" alt="Rainforest Alliance" loading="lazy"></a>
+        <a href="https://www.gras-system.org/" target="_blank" rel="noopener" title="GRAS – Global Risk Assessment Services"><img class="wide" src="partners/GRAS.png" alt="GRAS – Global Risk Assessment Services" loading="lazy"></a>
+        <a href="https://aither.com/" target="_blank" rel="noopener" title="Aither"><img class="wide" src="partners/Aither.png" alt="Aither" loading="lazy"></a>
+        <a href="https://www.anw-deutschland.de/" target="_blank" rel="noopener" title="ANW Deutschland"><img src="partners/ANW_Logo.jpg" alt="ANW Deutschland" loading="lazy"></a>
+        <a href="https://www.bmleh.de/" target="_blank" rel="noopener" title="German Federal Ministry of Agriculture, Food and Regional Identity"><img class="big" src="partners/BMLEH.png" alt="Bundesministerium für Landwirtschaft, Ernährung und Heimat" loading="lazy"></a>
+        <a href="https://www.ufz.de/" target="_blank" rel="noopener" title="Helmholtz Centre for Environmental Research – UFZ"><img src="partners/UFZ.png" alt="Helmholtz-Zentrum für Umweltforschung – UFZ" loading="lazy"></a>
+        <a href="https://www.uni-goettingen.de/" target="_blank" rel="noopener" title="University of Göttingen"><img src="partners/UniGoett.png" alt="Universität Göttingen" loading="lazy"></a>
+        <a href="https://agenteev.org/#iniciativas" target="_blank" rel="noopener" title="A GENTE – coletivo solidário"><span class="wordmark">A GENTE</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="wrap about">
+      <div>
+        <p class="eyebrow">About</p>
+        <h2>Founded by Felipe Coelho Costa.</h2>
+        <p>GeoAnalytics Lab is a Barcelona-based consultancy founded by <strong>Felipe Coelho Costa</strong>, a geospatial and sustainability specialist with more than 15 years of experience across Europe, Latin America and Africa.</p>
+        <p>Felipe has built <strong>EUDR deforestation monitoring pipelines</strong>, reviewed sourcing risk methodologies for agricultural supply chains, and led the technical side of WWF's global <strong>Water Risk Filter</strong>. He also spent six years teaching GIS at university level.</p>
+        <p>He holds an MSc in Geodesy and Geoinformation Science (TU Berlin), a degree in Environmental Engineering (University of São Paulo) and a postgraduate diploma in Machine Learning &amp; AI (Columbia Engineering).</p>
+        <div class="orgs" aria-label="Previous experience">
+          <span>Rainforest Alliance</span><span>GRAS</span><span>WWF Germany</span><span>HTWG Konstanz</span><span>Humboldt-Universität zu Berlin</span><span>IPAM Amazônia</span>
+        </div>
+      </div>
+      <div>
+        <ul class="facts">
+          <li><span>Based in</span><span>Barcelona, Spain</span></li>
+          <li><span>Works</span><span>Remote &amp; on-site, worldwide</span></li>
+          <li><span>Focus</span><span>ESG risk · Conservation · Deforestation · GIS training</span></li>
+          <li><span>Languages</span><span>EN · ES · DE · PT</span></li>
+        </ul>
+        <div class="tools">
+          <span>Google Earth Engine</span><span>Python</span><span>R</span><span>ArcGIS</span><span>QGIS</span><span>CNN / Deep learning</span><span>Time-series</span><span>Cloud ML</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <h2>Have a spatial question? Let's talk.</h2>
+        <p>Tell us briefly about your project. We usually reply within one working day.</p>
+        <div class="ctas">
+          <a class="btn" href="mailto:hello@geoanalyticslab.com">hello@geoanalyticslab.com</a>
+          <a class="btn ghost" href="https://www.linkedin.com/in/felipe-coelho-costa-1a848111" target="_blank" rel="noopener">LinkedIn</a>
+          <a class="btn ghost" href="https://github.com/coelho85" target="_blank" rel="noopener">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y">2026</span> GeoAnalytics Lab · Barcelona</span>
+    <span>geoanalyticslab.com</span>
+  </div>
+</footer>
+
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
