@@ -13,193 +13,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #f6f3ec;
-    --surface: #fffdf8;
-    --ink: #1c2a24;
-    --muted: #5b6b63;
-    --line: #dcd6c8;
-    --brand: #1f4d3a;
-    --brand-ink: #f6f3ec;
-    --accent: #c98a2b;
-    --contour: rgba(31, 77, 58, 0.14);
-    --max: 1120px;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #111815;
-      --surface: #18221e;
-      --ink: #e8eee9;
-      --muted: #9fb0a7;
-      --line: #2a3832;
-      --brand: #7cc4a0;
-      --brand-ink: #0f1613;
-      --accent: #e9b65a;
-      --contour: rgba(124, 196, 160, 0.13);
-    }
-  }
-  :root[data-theme="dark"] {
-    --bg: #111815;
-    --surface: #18221e;
-    --ink: #e8eee9;
-    --muted: #9fb0a7;
-    --line: #2a3832;
-    --brand: #7cc4a0;
-    --brand-ink: #0f1613;
-    --accent: #e9b65a;
-    --contour: rgba(124, 196, 160, 0.13);
-  }
-
-  * { box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  body {
-    margin: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font: 400 17px/1.65 Inter, system-ui, -apple-system, sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-  a { color: inherit; }
-  h1, h2, h3 { font-family: Fraunces, Georgia, serif; font-weight: 600; line-height: 1.15; margin: 0; }
-  .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
-  .eyebrow {
-    font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase;
-    color: var(--accent); margin: 0 0 14px;
-  }
-
-  /* Nav */
-  header.nav {
-    position: sticky; top: 0; z-index: 10;
-    background: color-mix(in srgb, var(--bg) 88%, transparent);
-    backdrop-filter: blur(8px);
-    border-bottom: 1px solid var(--line);
-  }
-  .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-  .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; font-family: Fraunces, Georgia, serif; font-weight: 600; font-size: 20px; }
-  .logo svg { flex: none; }
-  .logo span b { color: var(--brand); font-weight: 600; }
-  .nav ul { display: flex; gap: 28px; list-style: none; margin: 0; padding: 0; font-size: 15px; }
-  .nav ul a { text-decoration: none; color: var(--muted); }
-  .nav ul a:hover { color: var(--ink); }
-  .nav ul .gh a { display: inline-flex; align-items: center; gap: 6px; }
-  @media (max-width: 720px) {
-    .nav ul li:not(:last-child) { display: none; }
-    .nav ul { gap: 16px; align-items: center; }
-  }
-
-  .btn {
-    display: inline-block; padding: 13px 22px; border-radius: 999px;
-    background: var(--brand); color: var(--brand-ink); text-decoration: none;
-    font-weight: 600; font-size: 15px; border: 1px solid var(--brand);
-    transition: transform .15s ease;
-  }
-  .btn:hover { transform: translateY(-1px); }
-  .btn.ghost { background: transparent; color: var(--ink); border-color: var(--line); }
-  .nav .btn { padding: 8px 16px; color: var(--brand-ink); white-space: nowrap; }
-
-  /* Hero */
-  .hero { position: relative; overflow: hidden; padding: 112px 0 104px; }
-  .hero .contours { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
-  .hero .contours path { fill: none; stroke: var(--contour); stroke-width: 1.4; }
-  .hero .wrap { position: relative; }
-  .hero h1 { font-size: clamp(38px, 6vw, 68px); max-width: 15ch; letter-spacing: -0.01em; }
-  .hero h1 em { font-style: italic; color: var(--brand); font-weight: 400; }
-  .hero p.lead { font-size: clamp(18px, 2vw, 21px); color: var(--muted); max-width: 58ch; margin: 24px 0 36px; }
-  .hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; }
-  .coords { margin-top: 56px; font: 500 13px/1 ui-monospace, SFMono-Regular, Menlo, monospace; color: var(--muted); letter-spacing: .04em; }
-
-  section { padding: 96px 0; border-top: 1px solid var(--line); }
-  section h2 { font-size: clamp(30px, 4vw, 42px); max-width: 22ch; }
-  .section-intro { color: var(--muted); max-width: 60ch; margin: 16px 0 0; }
-
-  /* Services */
-  .grid { display: grid; gap: 20px; margin-top: 48px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-  .card {
-    background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 28px;
-  }
-  .card .num { font: 500 13px/1 ui-monospace, Menlo, monospace; color: var(--accent); }
-  .card h3 { font-size: 22px; margin: 14px 0 10px; }
-  .card p { margin: 0; color: var(--muted); font-size: 16px; }
-  .card ul { margin: 14px 0 0; padding-left: 18px; color: var(--muted); font-size: 15px; }
-
-  /* Pillars */
-  .pillars { grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr)); gap: 24px; }
-  .pillar { padding: 0; overflow: hidden; display: flex; flex-direction: column; }
-  .pillar figure { margin: 0; position: relative; overflow: hidden; aspect-ratio: 16 / 9; background: var(--line); border-bottom: 1px solid var(--line); }
-  .pillar figure img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
-  .pillar figure.sat img { filter: brightness(2) contrast(1.2) saturate(1.1); }
-  .pillar figcaption { position: absolute; right: 8px; bottom: 8px; font-size: 11px; line-height: 1.3; padding: 3px 8px; border-radius: 6px; background: rgba(0,0,0,.55); color: #fff; }
-  .pillar figcaption a { color: #fff; }
-  .pillar .body { padding: 26px 28px 30px; }
-  .pillar h3 { margin-top: 12px; }
-
-  /* Publications */
-  .pubs { list-style: none; margin: 48px 0 0; padding: 0; border-top: 1px solid var(--line); }
-  .pubs li { border-bottom: 1px solid var(--line); }
-  .pubs a { display: grid; grid-template-columns: 120px 1fr auto; gap: 8px 24px; align-items: baseline; padding: 22px 4px; text-decoration: none; transition: background .15s ease; }
-  .pubs a:hover { background: color-mix(in srgb, var(--brand) 6%, transparent); }
-  .pubs .type { font: 500 12px/1.4 ui-monospace, Menlo, monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
-  .pubs h3 { font-size: 20px; line-height: 1.3; }
-  .pubs .meta { display: block; margin-top: 6px; font-size: 15px; color: var(--muted); }
-  .pubs .go { color: var(--brand); font-size: 18px; transition: transform .15s ease; }
-  .pubs a:hover .go { transform: translate(2px, -2px); }
-  @media (max-width: 640px) {
-    .pubs a { grid-template-columns: 1fr auto; }
-    .pubs .type { grid-column: 1 / -1; }
-  }
-
-  /* Partners */
-  .logos { display: grid; gap: 16px; margin-top: 48px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr)); }
-  .logos a { display: flex; align-items: center; justify-content: center; height: 112px; padding: 18px 22px; border-radius: 14px; background: #fff; border: 1px solid var(--line); text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
-  .logos a:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,.08); }
-  .logos img { max-width: 100%; max-height: 64px; object-fit: contain; }
-  .logos img.wide { max-height: 44px; }
-  .logos img.big { max-height: 84px; }
-  .logos .wordmark { font: 600 26px/1 Fraunces, Georgia, serif; color: #1f4d3a; letter-spacing: .02em; }
-
-  /* Approach */
-  .steps { display: grid; gap: 32px; margin-top: 48px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); counter-reset: step; }
-  .step { border-top: 2px solid var(--brand); padding-top: 18px; }
-  .step h3 { font-size: 20px; margin-bottom: 8px; }
-  .step h3::before { counter-increment: step; content: "0" counter(step) "  "; font: 500 14px ui-monospace, Menlo, monospace; color: var(--accent); }
-  .step p { margin: 0; color: var(--muted); font-size: 16px; }
-
-  /* About */
-  .about { display: grid; gap: 56px; grid-template-columns: 1.2fr 1fr; align-items: start; }
-  @media (max-width: 860px) { .about { grid-template-columns: 1fr; } }
-  .about p { color: var(--muted); }
-  .about p strong { color: var(--ink); font-weight: 600; }
-  .facts { list-style: none; margin: 0; padding: 0; border: 1px solid var(--line); border-radius: 16px; background: var(--surface); }
-  .facts li { padding: 18px 24px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 16px; font-size: 15px; }
-  .facts li:last-child { border-bottom: 0; }
-  .facts li span:first-child { color: var(--muted); }
-  .facts li span:last-child { text-align: right; font-weight: 500; }
-
-  .orgs { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
-  .orgs span { border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 14px; color: var(--muted); background: var(--surface); }
-
-  .tools { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
-  .tools span { font: 500 13px/1 ui-monospace, Menlo, monospace; padding: 8px 12px; border-radius: 8px; background: color-mix(in srgb, var(--brand) 12%, transparent); color: var(--brand); }
-
-  /* Contact */
-  .contact { background: var(--brand); color: var(--brand-ink); border-radius: 24px; padding: 64px 48px; text-align: center; }
-  .contact h2 { margin: 0 auto; max-width: 20ch; }
-  .contact p { opacity: .85; max-width: 52ch; margin: 18px auto 32px; }
-  .contact .btn { background: var(--brand-ink); color: var(--brand); border-color: var(--brand-ink); }
-  .contact .btn.ghost { background: transparent; color: var(--brand-ink); border-color: color-mix(in srgb, var(--brand-ink) 40%, transparent); }
-  .contact .ctas { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-  @media (max-width: 600px) { .contact { padding: 48px 24px; } }
-
-  footer { padding: 40px 0 56px; color: var(--muted); font-size: 14px; }
-  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-
-  @media (max-width: 600px) {
-    .wrap { padding: 0 16px; }
-    .hero { padding: 72px 0 64px; }
-    section { padding: 72px 0; }
-  }
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
@@ -251,39 +65,43 @@
       <p class="section-intro">Each engagement is built around a clear question and ends in something your team can actually use: a pipeline, a risk score, a map, a dashboard or a defensible report.</p>
       <div class="grid pillars">
         <article class="card pillar">
-          <figure><img src="pictures/wrf.jpg" alt="WWF Water Risk Filter map showing basin-level water risk across Africa and Asia" style="object-position: center 70%" loading="lazy"></figure>
+          <figure><a href="pillars/esg-risk.html" aria-hidden="true" tabindex="-1"><img src="pictures/wrf_1.jpg" alt="" loading="lazy"></a></figure>
           <div class="body">
             <div class="num">01</div>
-            <h3>ESG spatial risk assessment &amp; compliance</h3>
+            <h3><a href="pillars/esg-risk.html">ESG spatial risk assessment &amp; compliance</a></h3>
             <p>Location-based risk frameworks that combine global ESG datasets with your sites and suppliers, built to meet EUDR, CSRD and other reporting requirements.</p>
             <ul><li>Supply chain &amp; sourcing risk scoring</li><li>Water, biodiversity &amp; physical climate risk</li><li>EUDR, CSRD/ESRS and TNFD-aligned reporting</li></ul>
+            <a class="more" href="pillars/esg-risk.html">Learn more <span aria-hidden="true">→</span></a>
           </div>
         </article>
         <article class="card pillar">
-          <figure><img src="pictures/KAZAmap.jpg" alt="Map of the Kavango-Zambezi (KAZA) transfrontier conservation area across five countries" loading="lazy"></figure>
+          <figure><a href="pillars/conservation.html" aria-hidden="true" tabindex="-1"><img src="pictures/KAZAmap.jpg" alt="" loading="lazy"></a></figure>
           <div class="body">
             <div class="num">02</div>
-            <h3>Spatial analysis for conservation</h3>
+            <h3><a href="pillars/conservation.html">Spatial analysis for conservation</a></h3>
             <p>Mapping and monitoring for conservation programmes, from landscape-scale land cover change to the habitats and species that depend on them.</p>
             <ul><li>Habitat &amp; biodiversity monitoring</li><li>Land cover &amp; land use change mapping</li><li>Field data collection design &amp; integration</li></ul>
+            <a class="more" href="pillars/conservation.html">Learn more <span aria-hidden="true">→</span></a>
           </div>
         </article>
         <article class="card pillar">
-          <figure class="sat"><img src="pictures/amazon-deforestation.jpg" alt="Satellite image of the fishbone deforestation pattern in Rondônia, Brazilian Amazon" loading="lazy"><figcaption>Rondônia, Brazil · <a href="https://commons.wikimedia.org/wiki/File:Rond%C3%B4nia_Deforestation_(25_July_2016),_Brazil_(34296310700).jpg" target="_blank" rel="noopener">O.V.E.R.V.I.E.W.</a>, CC BY 2.0</figcaption></figure>
+          <figure class="sat"><a href="pillars/deforestation.html" aria-hidden="true" tabindex="-1"><img src="pictures/amazon-deforestation.jpg" alt="" loading="lazy"></a><figcaption>Rondônia, Brazil · <a href="https://commons.wikimedia.org/wiki/File:Rond%C3%B4nia_Deforestation_(25_July_2016),_Brazil_(34296310700).jpg" target="_blank" rel="noopener">O.V.E.R.V.I.E.W.</a>, CC BY 2.0</figcaption></figure>
           <div class="body">
             <div class="num">03</div>
-            <h3>Deforestation monitoring</h3>
+            <h3><a href="pillars/deforestation.html">Deforestation monitoring</a></h3>
             <p>Plot-level verification against deforestation cutoff dates, with automated alerts and audit-ready evidence, built on scalable remote sensing and ML pipelines.</p>
             <ul><li>Geolocation &amp; polygon quality checks</li><li>Forest baselines &amp; change detection</li><li>Google Earth Engine &amp; Python pipelines</li></ul>
+            <a class="more" href="pillars/deforestation.html">Learn more <span aria-hidden="true">→</span></a>
           </div>
         </article>
         <article class="card pillar">
-          <figure><img src="pictures/workshopKAZA.jpg" alt="Participants of a GIS training workshop for KAZA conservation partners" style="object-position: center 35%" loading="lazy"></figure>
+          <figure><a href="pillars/gis-training.html" aria-hidden="true" tabindex="-1"><img src="pictures/workshopKAZA.jpg" alt="" style="object-position: center 35%" loading="lazy"></a></figure>
           <div class="body">
             <div class="num">04</div>
-            <h3>GIS &amp; capacity building</h3>
+            <h3><a href="pillars/gis-training.html">GIS &amp; capacity building</a></h3>
             <p>Hands-on training in ArcGIS, QGIS and Earth Engine for teams that want to build spatial skills in-house and keep the work running.</p>
             <ul><li>Tailored workshops, on-site or remote</li><li>Workflow automation coaching</li><li>English, Spanish, German, Portuguese</li></ul>
+            <a class="more" href="pillars/gis-training.html">Learn more <span aria-hidden="true">→</span></a>
           </div>
         </article>
       </div>

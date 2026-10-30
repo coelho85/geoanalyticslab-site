@@ -9,3 +9,9 @@ pictures/kazaGrouppic.mhtml
 pictures/wrf.png
 pictures/KAZAmap.png
 pictures/workshopKAZA.png
+
+# CV (personal contact details)
+*.pdf
+!publications/*.pdf
+pictures/wrf_1.png
+pictures/teaching.jpg
