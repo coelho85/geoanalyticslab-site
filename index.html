@@ -3,19 +3,47 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>GeoAnalytics Lab</title>
+<title>GeoAnalytics Lab · Geospatial &amp; sustainability consulting, Barcelona</title>
 <meta name="description" content="GeoAnalytics Lab — geospatial and sustainability consulting from Barcelona. ESG spatial risk and compliance, conservation analysis, deforestation monitoring and GIS capacity building.">
 <meta property="og:title" content="GeoAnalytics Lab">
 <meta property="og:description" content="Geospatial intelligence for sustainable supply chains. EUDR compliance, deforestation monitoring and spatial risk analytics.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://geoanalyticslab.com/">
+<meta property="og:url" content="https://coelho85.github.io/geoanalyticslab-site/">
+<meta property="og:image" content="https://coelho85.github.io/geoanalyticslab-site/pictures/wrf_1.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://coelho85.github.io/geoanalyticslab-site/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f4d3a'/%3E%3Cpath d='M6 20c4-6 8 2 12-4s6-4 8-2' stroke='%23e9c46a' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='18' cy='16' r='2.6' fill='%23f6f3ec'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "GeoAnalytics Lab",
+  "url": "https://coelho85.github.io/geoanalyticslab-site/",
+  "image": "https://coelho85.github.io/geoanalyticslab-site/pictures/wrf_1.jpg",
+  "description": "Geospatial and sustainability consulting: ESG spatial risk and compliance, conservation analysis, deforestation monitoring and GIS capacity building.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Barcelona",
+    "addressCountry": "ES"
+  },
+  "areaServed": "Worldwide",
+  "founder": {
+    "@type": "Person",
+    "name": "Felipe Coelho Costa"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/in/felipe-coelho-costa-1a848111",
+    "https://github.com/coelho85"
+  ]
+}
+</script>
 </head>
 <body>
+<a class="skip" href="#top">Skip to content</a>
 
 <header class="nav">
   <div class="wrap">
@@ -23,7 +51,8 @@
       <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--brand)"/><path d="M6 20c4-6 8 2 12-4s6-4 8-2" stroke="var(--accent)" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="18" cy="16" r="2.6" fill="var(--brand-ink)"/></svg>
       <span>GeoAnalytics<b>Lab</b></span>
     </a>
-    <ul>
+    <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <ul id="nav-links">
       <li><a href="#services">What we do</a></li>
       <li><a href="#work">Work</a></li>
       <li><a href="#partners">Partners</a></li>
@@ -58,6 +87,15 @@
     </div>
   </div>
 
+  <div class="proof">
+    <dl class="wrap">
+      <div><dt>15+</dt><dd>years in geospatial and sustainability work</dd></div>
+      <div><dt>3</dt><dd>regions of experience: Europe, Latin America, Africa</dd></div>
+      <div><dt>80+</dt><dd>global spatial layers maintained for WWF's Water Risk Filter</dd></div>
+      <div><dt>4</dt><dd>working languages: EN, ES, DE, PT</dd></div>
+    </dl>
+  </div>
+
   <section id="services">
     <div class="wrap">
       <p class="eyebrow">What we do</p>
@@ -69,7 +107,6 @@
           <div class="body">
             <div class="num">01</div>
             <h3><a href="pillars/esg-risk.html">ESG spatial risk assessment &amp; compliance</a></h3>
-            <p>Location-based risk frameworks that combine global ESG datasets with your sites and suppliers, built to meet EUDR, CSRD and other reporting requirements.</p>
             <ul><li>Supply chain &amp; sourcing risk scoring</li><li>Water, biodiversity &amp; physical climate risk</li><li>EUDR, CSRD/ESRS and TNFD-aligned reporting</li></ul>
             <a class="more" href="pillars/esg-risk.html">Learn more <span aria-hidden="true">→</span></a>
           </div>
@@ -79,7 +116,6 @@
           <div class="body">
             <div class="num">02</div>
             <h3><a href="pillars/conservation.html">Spatial analysis for conservation</a></h3>
-            <p>Mapping and monitoring for conservation programmes, from landscape-scale land cover change to the habitats and species that depend on them.</p>
             <ul><li>Habitat &amp; biodiversity monitoring</li><li>Land cover &amp; land use change mapping</li><li>Field data collection design &amp; integration</li></ul>
             <a class="more" href="pillars/conservation.html">Learn more <span aria-hidden="true">→</span></a>
           </div>
@@ -89,7 +125,6 @@
           <div class="body">
             <div class="num">03</div>
             <h3><a href="pillars/deforestation.html">Deforestation monitoring</a></h3>
-            <p>Plot-level verification against deforestation cutoff dates, with automated alerts and audit-ready evidence, built on scalable remote sensing and ML pipelines.</p>
             <ul><li>Geolocation &amp; polygon quality checks</li><li>Forest baselines &amp; change detection</li><li>Google Earth Engine &amp; Python pipelines</li></ul>
             <a class="more" href="pillars/deforestation.html">Learn more <span aria-hidden="true">→</span></a>
           </div>
@@ -99,7 +134,6 @@
           <div class="body">
             <div class="num">04</div>
             <h3><a href="pillars/gis-training.html">GIS &amp; capacity building</a></h3>
-            <p>Hands-on training in ArcGIS, QGIS and Earth Engine for teams that want to build spatial skills in-house and keep the work running.</p>
             <ul><li>Tailored workshops, on-site or remote</li><li>Workflow automation coaching</li><li>English, Spanish, German, Portuguese</li></ul>
             <a class="more" href="pillars/gis-training.html">Learn more <span aria-hidden="true">→</span></a>
           </div>
@@ -129,27 +163,27 @@
       <ul class="pubs">
         <li><a href="https://storymaps.arcgis.com/stories/2e3b8c61e23046f2ab0183e8ff36ebf6" target="_blank" rel="noopener">
           <span class="type">Story map</span>
-          <span><h3>Monitoring habitat change for a sustainable KAZA</h3><span class="meta">Kavango-Zambezi Transfrontier Conservation Area · BFAST time-series change detection</span></span>
+          <div><h3>Monitoring habitat change for a sustainable KAZA</h3><span class="meta">Kavango-Zambezi Transfrontier Conservation Area · BFAST time-series change detection</span></div>
           <span class="go" aria-hidden="true">↗</span></a></li>
         <li><a href="https://storymaps.arcgis.com/stories/db69e30bc8434330ab9445a200b19709" target="_blank" rel="noopener">
           <span class="type">Story map</span>
-          <span><h3>KAZA Land Cover 2021</h3><span class="meta">Land cover mapping across five countries of the KAZA landscape</span></span>
+          <div><h3>KAZA Land Cover 2021</h3><span class="meta">Land cover mapping across five countries of the KAZA landscape</span></div>
           <span class="go" aria-hidden="true">↗</span></a></li>
         <li><a href="https://pubmed.ncbi.nlm.nih.gov/33085699/" target="_blank" rel="noopener">
           <span class="type">Article</span>
-          <span><h3>A climate adaptation strategy for Mai Po Inner Deep Bay Ramsar site: steppingstone to climate proofing the East Asian-Australasian Flyway</h3><span class="meta">Wikramanayake, Or, Costa et al. · PLOS ONE, 2020</span></span>
+          <div><h3>A climate adaptation strategy for Mai Po Inner Deep Bay Ramsar site: steppingstone to climate proofing the East Asian-Australasian Flyway</h3><span class="meta">Wikramanayake, Or, Costa et al. · PLOS ONE, 2020</span></div>
           <span class="go" aria-hidden="true">↗</span></a></li>
         <li><a href="publications/wwf_valuing_rivers__final_.pdf" target="_blank" rel="noopener">
           <span class="type">Report</span>
-          <span><h3>Valuing Rivers: how the diverse benefits of healthy rivers underpin economies</h3><span class="meta">WWF, 2018 · Spatial analysis and maps · PDF</span></span>
+          <div><h3>Valuing Rivers: how the diverse benefits of healthy rivers underpin economies</h3><span class="meta">WWF, 2018 · Spatial analysis and maps · PDF</span></div>
           <span class="go" aria-hidden="true">↗</span></a></li>
         <li><a href="publications/wwf_waterstewardship_brief_web_final.pdf" target="_blank" rel="noopener">
           <span class="type">Brief</span>
-          <span><h3>Water Stewardship Revisited: shifting the narrative from risk to value creation</h3><span class="meta">WWF-Germany, 2018 · Maps · PDF</span></span>
+          <div><h3>Water Stewardship Revisited: shifting the narrative from risk to value creation</h3><span class="meta">WWF-Germany, 2018 · Maps · PDF</span></div>
           <span class="go" aria-hidden="true">↗</span></a></li>
         <li><a href="https://wwf.medium.com/lets-talk-data-new-data-in-wwf-water-risk-filter-will-help-companies-better-assess-risks-in-a-44335e306760" target="_blank" rel="noopener">
           <span class="type">Blog</span>
-          <span><h3>Let's talk data: new data in the WWF Water Risk Filter helps companies better assess risks</h3><span class="meta">WWF on Medium · Water Risk Filter</span></span>
+          <div><h3>Let's talk data: new data in the WWF Water Risk Filter helps companies better assess risks</h3><span class="meta">WWF on Medium · Water Risk Filter</span></div>
           <span class="go" aria-hidden="true">↗</span></a></li>
       </ul>
     </div>
@@ -186,6 +220,7 @@
         </div>
       </div>
       <div>
+        <figure class="portrait"><img src="pictures/felipe-costa-web.jpg" alt="Portrait of Felipe Coelho Costa" width="900" height="756" loading="lazy"></figure>
         <ul class="facts">
           <li><span>Based in</span><span>Barcelona, Spain</span></li>
           <li><span>Works</span><span>Remote &amp; on-site, worldwide</span></li>
@@ -221,6 +256,6 @@
   </div>
 </footer>
 
-<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+<script src="site.js"></script>
 </body>
 </html>

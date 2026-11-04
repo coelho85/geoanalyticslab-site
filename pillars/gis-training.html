@@ -8,6 +8,10 @@
 <meta property="og:title" content="GIS &amp; capacity building · GeoAnalytics Lab">
 <meta property="og:description" content="Hands-on GIS, Earth Engine and remote sensing training, workshops and coaching for NGOs, companies and public institutions.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://coelho85.github.io/geoanalyticslab-site/pillars/gis-training.html">
+<meta property="og:image" content="https://coelho85.github.io/geoanalyticslab-site/pictures/workshopKAZA.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://coelho85.github.io/geoanalyticslab-site/pillars/gis-training.html">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231f4d3a'/%3E%3Cpath d='M6 20c4-6 8 2 12-4s6-4 8-2' stroke='%23e9c46a' stroke-width='2.4' fill='none' stroke-linecap='round'/%3E%3Ccircle cx='18' cy='16' r='2.6' fill='%23f6f3ec'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,6 +19,7 @@
 <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+<a class="skip" href="#top">Skip to content</a>
 
 <header class="nav">
   <div class="wrap">
@@ -22,7 +27,8 @@
       <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="var(--brand)"/><path d="M6 20c4-6 8 2 12-4s6-4 8-2" stroke="var(--accent)" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="18" cy="16" r="2.6" fill="var(--brand-ink)"/></svg>
       <span>GeoAnalytics<b>Lab</b></span>
     </a>
-    <ul>
+    <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <ul id="nav-links">
       <li><a href="../index.html#services">What we do</a></li>
       <li><a href="../index.html#work">Work</a></li>
       <li><a href="../index.html#partners">Partners</a></li>
@@ -32,7 +38,7 @@
   </div>
 </header>
 
-<main>
+<main id="top">
   <div class="page-hero">
     <svg class="contours" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
       <path d="M700 300c0-90 90-150 190-150s200 70 200 160-100 150-200 150-190-70-190-160z"/>
@@ -70,6 +76,7 @@
     <div class="wrap">
       <p class="eyebrow">What we offer</p>
       <h2>Services in this pillar.</h2>
+      <p class="section-intro">Hands-on training in ArcGIS, QGIS and Earth Engine for teams that want to build spatial skills in-house and keep the work running.</p>
       <div class="offer">
         <article class="card"><div class="num">04.1</div><h3>Introduction to GIS</h3><p>Core concepts and hands-on practice in ArcGIS and QGIS, for beginners and non-specialists.</p></article>
         <article class="card"><div class="num">04.2</div><h3>Remote sensing with Earth Engine</h3><p>Satellite data, land cover classification and change detection in Google Earth Engine, with Python or JavaScript.</p></article>
@@ -118,6 +125,6 @@
   </div>
 </footer>
 
-<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+<script src="../site.js"></script>
 </body>
 </html>
