@@ -248,7 +248,7 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
 
 .split { display: grid; gap: 48px; grid-template-columns: 1fr 1fr; align-items: center; }
 .split figure { margin: 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); }
-.split figure img { width: 100%; display: block; }
+.split figure img, .split figure video { width: 100%; height: auto; display: block; }
 .split figcaption { padding: 10px 14px; font-size: 13px; color: var(--muted); background: var(--surface); }
 @media (max-width: 860px) { .split { grid-template-columns: 1fr; } }
 
