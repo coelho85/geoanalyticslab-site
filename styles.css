@@ -230,6 +230,14 @@ footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; g
 .banner figcaption a { color: #fff; }
 @media (max-width: 600px) { .banner { aspect-ratio: 4 / 3; } }
 .banner.wide { aspect-ratio: 16 / 9; } /* show composite images uncropped at all widths */
+/* figcaption with a title pill (top left) and a credit pill (bottom right) */
+.pillar figcaption.split, .banner figcaption.split { position: static; padding: 0; background: none; }
+figcaption.split > span { position: absolute; line-height: 1.3; padding: 3px 8px; border-radius: 6px; background: rgba(0,0,0,.55); color: #fff; }
+figcaption.split .fig-title { left: 8px; top: 8px; font-weight: 600; }
+figcaption.split .credit { right: 8px; bottom: 8px; }
+.banner figcaption.split > span { padding: 4px 10px; }
+.banner figcaption.split .fig-title { left: 10px; top: 10px; }
+.banner figcaption.split .credit { right: 10px; bottom: 10px; }
 
 .prose { max-width: 68ch; }
 .prose p { color: var(--muted); margin: 16px 0 0; }
