@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&text=f&display=swap" rel="stylesheet"><!-- only the letter f, replacing Fraunces' f -->
 <link rel="stylesheet" href="styles.css">
 <script type="application/ld+json">
 {
@@ -65,16 +66,45 @@
 
 <main id="top">
   <div class="hero">
-    <svg class="contours" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-      <path d="M700 300c0-90 90-150 190-150s200 70 200 160-100 150-200 150-190-70-190-160z"/>
-      <path d="M650 300c0-120 115-200 245-200s255 95 255 210-125 200-255 200-245-90-245-210z"/>
-      <path d="M600 305c0-150 140-250 300-250s310 115 310 265-150 250-310 250-300-115-300-265z"/>
-      <path d="M545 310c0-180 165-300 355-300s365 140 365 320-175 300-365 300-355-140-355-320z"/>
-      <path d="M490 315c0-215 190-355 410-355s420 165 420 375-200 355-420 355-410-160-410-375z"/>
-      <path d="M435 320c0-245 215-405 465-405s475 190 475 430-225 405-475 405-465-185-465-430z"/>
-      <path d="M760 300c0-55 60-95 130-95s135 45 135 100-65 95-135 95-130-45-130-100z"/>
-      <path d="M815 300c0-25 30-45 70-45s75 20 75 48-35 45-75 45-70-20-70-48z"/>
-    </svg>
+    <svg class="hero-art" viewBox="0 0 500 500" role="img" aria-label="A satellite over the curved horizon of the Earth, scanning real imagery of farmland and forest in São Paulo state, Brazil, and flagging a detected change">
+  <defs>
+    <clipPath id="earthClip"><circle cx="250" cy="1240" r="1000"/></clipPath>
+    <clipPath id="footClip"><circle cx="480" cy="180" r="112"/></clipPath>
+    <linearGradient id="fadeV" x1="0" y1="0" x2="0" y2="1"><stop offset=".8" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <linearGradient id="fadeH" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".1" stop-color="#fff"/><stop offset=".93" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <mask id="fadeMaskV" maskUnits="userSpaceOnUse" x="-200" y="0" width="900" height="500"><rect x="-200" y="0" width="900" height="500" fill="url(#fadeV)"/></mask>
+    <mask id="fadeMaskH" maskUnits="userSpaceOnUse" x="0" y="0" width="520" height="500"><rect x="0" y="0" width="520" height="500" fill="url(#fadeH)"/></mask>
+    <radialGradient id="haze" gradientUnits="userSpaceOnUse" cx="250" cy="1240" r="1000">
+      <stop offset=".95" stop-color="#bfe0ff" stop-opacity="0"/><stop offset=".985" stop-color="#cfe8ff" stop-opacity=".55"/><stop offset="1" stop-color="#e8f4ff" stop-opacity=".8"/>
+    </radialGradient>
+    <linearGradient id="swathGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="var(--brand)" stop-opacity=".06"/><stop offset="1" stop-color="#ffffff" stop-opacity=".45"/></linearGradient>
+    <filter id="glow" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="5"/></filter>
+  </defs>
+  <path class="orbit" d="M60 75.4A1180 1180 0 0 1 500 86.8"/>
+  <g mask="url(#fadeMaskH)"><g mask="url(#fadeMaskV)">
+    <circle class="atmo" cx="250" cy="1240" r="1005" filter="url(#glow)"/>
+    <g clip-path="url(#earthClip)">
+      <g transform="matrix(1 0 0 0.42 -150 222)">
+        <image href="pictures/hero-farm-sp.jpg" x="0" y="0" width="800" height="800"/>
+        <g class="raster" clip-path="url(#footClip)"><rect class="open" x="369" y="135" width="20" height="20"/><rect class="open" x="369" y="157" width="20" height="20"/><rect class="open" x="369" y="179" width="20" height="20"/><rect class="open" x="369" y="201" width="20" height="20"/><rect class="open" x="391" y="91" width="20" height="20"/><rect class="open" x="391" y="113" width="20" height="20"/><rect class="open" x="391" y="135" width="20" height="20"/><rect class="open" x="391" y="157" width="20" height="20"/><rect class="open" x="391" y="179" width="20" height="20"/><rect class="open" x="391" y="201" width="20" height="20"/><rect class="open" x="391" y="223" width="20" height="20"/><rect class="open" x="391" y="245" width="20" height="20"/><rect class="open" x="413" y="91" width="20" height="20"/><rect class="open" x="413" y="113" width="20" height="20"/><rect class="open" x="413" y="135" width="20" height="20"/><rect class="open" x="413" y="157" width="20" height="20"/><rect class="open" x="413" y="179" width="20" height="20"/><rect class="open" x="413" y="201" width="20" height="20"/><rect class="open" x="413" y="223" width="20" height="20"/><rect class="open" x="413" y="245" width="20" height="20"/><rect class="open" x="435" y="69" width="20" height="20"/><rect class="open" x="435" y="91" width="20" height="20"/><rect class="open" x="435" y="113" width="20" height="20"/><rect class="open" x="435" y="135" width="20" height="20"/><rect class="open" x="435" y="157" width="20" height="20"/><rect class="open" x="435" y="179" width="20" height="20"/><rect class="open" x="435" y="201" width="20" height="20"/><rect class="forest" x="435" y="223" width="20" height="20"/><rect class="forest" x="435" y="245" width="20" height="20"/><rect class="forest" x="435" y="267" width="20" height="20"/><rect class="open" x="457" y="69" width="20" height="20"/><rect class="open" x="457" y="91" width="20" height="20"/><rect class="open" x="457" y="113" width="20" height="20"/><rect class="open" x="457" y="135" width="20" height="20"/><rect class="alert" x="457" y="157" width="20" height="20"/><rect class="alert" x="457" y="179" width="20" height="20"/><rect class="alert" x="457" y="201" width="20" height="20"/><rect class="forest" x="457" y="223" width="20" height="20"/><rect class="forest" x="457" y="245" width="20" height="20"/><rect class="open" x="457" y="267" width="20" height="20"/><rect class="open" x="479" y="69" width="20" height="20"/><rect class="forest" x="479" y="91" width="20" height="20"/><rect class="forest" x="479" y="113" width="20" height="20"/><rect class="forest" x="479" y="135" width="20" height="20"/><rect class="alert" x="479" y="157" width="20" height="20"/><rect class="alert" x="479" y="179" width="20" height="20"/><rect class="alert" x="479" y="201" width="20" height="20"/><rect class="forest" x="479" y="223" width="20" height="20"/><rect class="forest" x="479" y="245" width="20" height="20"/><rect class="open" x="479" y="267" width="20" height="20"/><rect class="open" x="501" y="69" width="20" height="20"/><rect class="forest" x="501" y="91" width="20" height="20"/><rect class="forest" x="501" y="113" width="20" height="20"/><rect class="forest" x="501" y="135" width="20" height="20"/><rect class="alert" x="501" y="157" width="20" height="20"/><rect class="alert" x="501" y="179" width="20" height="20"/><rect class="alert" x="501" y="201" width="20" height="20"/><rect class="forest" x="501" y="223" width="20" height="20"/><rect class="forest" x="501" y="245" width="20" height="20"/><rect class="forest" x="501" y="267" width="20" height="20"/><rect class="forest" x="523" y="91" width="20" height="20"/><rect class="forest" x="523" y="113" width="20" height="20"/><rect class="forest" x="523" y="135" width="20" height="20"/><rect class="open" x="523" y="157" width="20" height="20"/><rect class="open" x="523" y="179" width="20" height="20"/><rect class="open" x="523" y="201" width="20" height="20"/><rect class="forest" x="523" y="223" width="20" height="20"/><rect class="forest" x="523" y="245" width="20" height="20"/><rect class="open" x="523" y="267" width="20" height="20"/><rect class="forest" x="545" y="91" width="20" height="20"/><rect class="forest" x="545" y="113" width="20" height="20"/><rect class="forest" x="545" y="135" width="20" height="20"/><rect class="open" x="545" y="157" width="20" height="20"/><rect class="forest" x="545" y="179" width="20" height="20"/><rect class="forest" x="545" y="201" width="20" height="20"/><rect class="open" x="545" y="223" width="20" height="20"/><rect class="open" x="545" y="245" width="20" height="20"/><rect class="open" x="567" y="135" width="20" height="20"/><rect class="open" x="567" y="157" width="20" height="20"/><rect class="forest" x="567" y="179" width="20" height="20"/><rect class="forest" x="567" y="201" width="20" height="20"/><rect class="open" x="567" y="223" width="20" height="20"/></g>
+        <circle class="footprint" cx="480" cy="180" r="112" vector-effect="non-scaling-stroke"/>
+        <g clip-path="url(#footClip)"><line class="scan" x1="368" y1="180" x2="592" y2="180" vector-effect="non-scaling-stroke"/></g>
+      </g>
+      <circle cx="250" cy="1240" r="1000" fill="url(#haze)"/>
+    </g>
+    <circle class="limb" cx="250" cy="1240" r="1000"/>
+  </g></g>
+  <polygon class="swath" points="425,73.0 224.0,297.6 436.0,297.6"/>
+  <g class="sat" transform="translate(425 73.0) rotate(8.5)">
+    <rect class="panel" x="-58" y="-9" width="38" height="18" rx="1.5"/>
+    <rect class="panel" x="20" y="-9" width="38" height="18" rx="1.5"/>
+    <path class="panel-grid" d="M-45.3 -9v18M-32.6 -9v18M-58 0h38M32.7 -9v18M45.3 -9v18M20 0h38"/>
+    <line class="strut" x1="-20" y1="0" x2="-11" y2="0"/><line class="strut" x1="11" y1="0" x2="20" y2="0"/>
+    <rect class="body" x="-11" y="-13" width="22" height="26" rx="3"/>
+    <circle class="lens" cx="0" cy="13" r="4"/>
+    <line class="strut" x1="0" y1="-13" x2="0" y2="-22"/><circle class="lens" cx="0" cy="-24" r="2.5"/>
+  </g>
+</svg>
     <div class="wrap">
       <p class="eyebrow">Geospatial &amp; sustainability consulting</p>
       <h1>Spatial intelligence for <em>your organization</em></h1>
@@ -102,7 +132,7 @@
       <p class="section-intro">We start by working with your team to define what you really need, then apply state-of-the-art technology to turn data into informed decisions.</p>
       <div class="grid pillars">
         <article class="card pillar">
-          <figure><a href="pillars/esg-risk.html" aria-hidden="true" tabindex="-1"><img src="pictures/wrf_1.jpg" alt="" loading="lazy"></a></figure>
+          <figure><a href="pillars/esg-risk.html" aria-hidden="true" tabindex="-1"><img src="pictures/global-risk-map.jpg" alt="" loading="lazy"></a></figure>
           <div class="body">
             <div class="num">01</div>
             <h3><a href="pillars/esg-risk.html">ESG spatial risk assessment &amp; compliance</a></h3>

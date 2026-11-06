@@ -16,6 +16,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&text=f&display=swap" rel="stylesheet"><!-- only the letter f, replacing Fraunces' f -->
 <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -51,9 +52,9 @@
     <div class="wrap">
       <a class="crumb" href="../index.html#services"><span aria-hidden="true">←</span> All pillars</a>
       <p class="eyebrow">Pillar 01 · ESG spatial risk assessment &amp; compliance</p>
-      <h1>Know where your risk sits, and prove it.</h1>
+      <h1>We analyse your locations using the best available spatial data.</h1>
       <p class="lead">Regulations such as the EU Deforestation Regulation (EUDR) and the Corporate Sustainability Reporting Directive (CSRD) ask companies to know where their products come from and what is happening on that land. We turn location data into risk evidence your sustainability, sourcing and compliance teams can act on.</p>
-      <figure class="banner "><img src="../pictures/wrf_1.jpg" alt="Water Risk Filter map of basin-level water risk across Africa, Europe and Asia"></figure>
+      <figure class="banner wide"><img src="../pictures/global-risk-map.jpg" alt="Stacked global map layers: tree cover loss, biodiversity risk, ecosystem services, biodiversity intactness and water risk"></figure>
     </div>
   </div>
 
@@ -61,10 +62,27 @@
     <div class="wrap">
       <div class="prose">
         <p class="eyebrow">Background</p>
-        <h2>Risk frameworks that hold up.</h2>
-          <p>Most ESG risk work starts with global datasets and ends with a score. The hard part is in between: choosing the right indicators, joining them to your suppliers or sites, and making sure the method is transparent enough to defend in front of auditors, investors and regulators.</p>
-          <p>Our team's experience covers both sides of that problem. At <strong>WWF Germany</strong>, that meant technical leadership of the global <strong>Water Risk Filter</strong>, a platform used by companies and financial institutions to assess water risk across their operations. More recently, at <strong>Rainforest Alliance</strong>, it meant reviewing the methodology behind sourcing risk assessments for agricultural suppliers and integrating high-resolution ESG datasets into their risk models.</p>
-        <div class="tools"><span>Water Risk Filter</span><span>ESG datasets</span><span>Google Earth Engine</span><span>Python</span><span>R</span><span>ArcGIS</span><span>QGIS</span></div>
+        <h2>Why location matters for ESG risk.</h2>
+        <p>ESG began as an investment term for the environmental, social and governance factors that can materially affect an asset or a business. It now covers wider sustainability concerns and is used across the private sector to judge how a company affects people and the environment.</p>
+        <p>Many of these risks show up locally, and they vary a great deal depending on where a site, farm or supplier is located. Cutting freshwater use matters most where baseline water stress is already high. Commodity sourcing is most exposed to deforestation risk where forest frontiers are still advancing. This is the idea behind <strong>ESG mapping</strong>: model the geographic context around an operation as spatial layers of environmental, social, economic, regulatory and political data, then overlay real or planned locations to see which ESG factors coincide with them.<sup><a href="#ref-1">1</a></sup></p>
+        <p>ESG mapping does not measure a company's performance. It looks upstream, at the <strong>pre-existing conditions</strong> a business has to take into account. Risk runs both ways: <em>inbound</em> risk from the local context to the operation, such as water scarcity, floods or land conflicts, and <em>outbound</em> risk from the operation to communities and ecosystems.<sup><a href="#ref-1">1</a>,<a href="#ref-3">3</a></sup></p>
+        <p>So, if you are looking to use geospatial technology to uncover the underlying risks in your supply chain, <a href="#contact">get in touch</a>.</p>
+        <div class="tools"><span>Global ESG datasets</span><span>Water risk indicators</span><span>Land use &amp; forest change</span><span>Google Earth Engine</span><span>Python</span><span>R</span><span>ArcGIS</span><span>QGIS</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">How we work</p>
+      <h2>Transparent risk frameworks, step by step.</h2>
+      <p class="section-intro">Combining many ESG datasets into one score makes complex realities easier to handle, but it can also hide what matters. We follow established practice for building composite indicators<sup><a href="#ref-2">2</a></sup> so that every choice can be explained to auditors, investors and regulators.</p>
+      <div class="offer">
+        <article class="card"><div class="num">Step 1</div><h3>Start from a clear question</h3><p>A composite measure only means something when it answers a defined problem: EUDR deforestation risk, water exposure of a sourcing region, or biodiversity sensitivity around a site. We agree the question and the end users first.</p></article>
+        <article class="card"><div class="num">Step 2</div><h3>Select fit-for-purpose data</h3><p>We choose indicators for relevance, readiness for use and quality, and state openly which dimensions cannot be measured spatially or have no data.</p></article>
+        <article class="card"><div class="num">Step 3</div><h3>Aggregate with care</h3><p>Ranking and weighting involve subjective choices. We make them explicit, test alternatives with stakeholders and pick methods that do not let a few severe risks disappear in an average.</p></article>
+        <article class="card"><div class="num">Step 4</div><h3>Show the parts, not just the score</h3><p>We deliver aggregated maps alongside a breakdown of each component, so decision makers can see trade-offs and what drives each result.</p></article>
+        <article class="card"><div class="num">Step 5</div><h3>Verify locally</h3><p>Large-scale data is for screening and comparison, not for final decisions about a single location. Priority sites are checked with high-resolution imagery, local data and ground truthing.</p></article>
       </div>
     </div>
   </section>
@@ -75,37 +93,44 @@
       <h2>Services in this pillar.</h2>
       <p class="section-intro">Location-based risk frameworks that combine global ESG datasets with your sites and suppliers, built to meet EUDR, CSRD and other reporting requirements.</p>
       <div class="offer">
-        <article class="card"><div class="num">01.1</div><h3>Sourcing &amp; supply chain risk</h3><p>Spatial risk scoring of suppliers, farms and sourcing regions using global ESG, land use and climate datasets.</p></article>
-        <article class="card"><div class="num">01.2</div><h3>Methodology review</h3><p>Independent review of existing risk assessment protocols, with clear recommendations to improve how risk is detected and reported.</p></article>
-        <article class="card"><div class="num">01.3</div><h3>Water &amp; physical climate risk</h3><p>Basin-level water scarcity, flooding and physical risk screening for sites, suppliers and investments.</p></article>
-        <article class="card"><div class="num">01.4</div><h3>EUDR due diligence</h3><p>Risk assessment and geolocation evidence for the commodities covered by the EU Deforestation Regulation.</p></article>
+        <article class="card"><div class="num">01.1</div><h3>Sourcing &amp; supply chain risk</h3><p>Spatial risk scoring of suppliers, farms and sourcing regions using global ESG, land use and climate datasets, with comparison against peers and regional baselines.</p></article>
+        <article class="card"><div class="num">01.2</div><h3>Methodology review</h3><p>Independent review of existing risk assessment protocols: indicator choice, data quality, weighting and aggregation, with clear recommendations to improve how risk is detected and reported.</p></article>
+        <article class="card"><div class="num">01.3</div><h3>Water &amp; physical climate risk</h3><p>Basin-level water scarcity, flooding and extreme-event screening for sites, suppliers and investments.</p></article>
+        <article class="card"><div class="num">01.4</div><h3>EUDR due diligence</h3><p>Risk assessment and geolocation evidence for the commodities covered by the EU Deforestation Regulation, including satellite-based verification of deforestation-free production.</p></article>
         <article class="card"><div class="num">01.5</div><h3>CSRD / ESRS spatial evidence</h3><p>Location-based data for the environmental topics of the ESRS, such as climate, water and biodiversity, to support materiality assessment and disclosure.</p></article>
-        <article class="card"><div class="num">01.6</div><h3>Implementation roadmaps</h3><p>Step-by-step plans to move spatial risk models from analysis into everyday company workflows.</p></article>
+        <article class="card"><div class="num">01.6</div><h3>Implementation roadmaps</h3><p>Step-by-step plans to move spatial risk models from analysis into everyday sourcing, compliance and investment workflows.</p></article>
       </div>
     </div>
   </section>
 
   <section>
     <div class="wrap">
-      <p class="eyebrow">Track record</p>
-      <h2>Relevant experience.</h2>
-      <ul class="track">
-        <li><span class="when">2025 – 2026</span><div><h3>Rainforest Alliance</h3><span class="role">Senior consultant, sustainability and geospatial science</span><ul><li>Reviewed the methodology of Sourcing Risk Assessment protocols for agricultural suppliers, improving risk detection across multi-regional supply chains.</li><li>Integrated high-resolution global ESG datasets into risk models, delivering compliance metrics for international sourcing standards.</li><li>Designed implementation roadmaps to bring spatial risk models into active company workflows.</li></ul></div></li>
-        <li><span class="when">2023 – 2025</span><div><h3>Global Risk Assessment Services (GRAS)</h3><span class="role">Remote sensing expert</span><ul><li>Coordinated technical delivery for international clients needing EUDR verification, including large agricultural importers.</li></ul></div></li>
-        <li><span class="when">2016 – 2018</span><div><h3>WWF Germany</h3><span class="role">Technical lead, Water Risk Filter</span><ul><li>Technical lead of the global Water Risk Filter platform, keeping 80+ global spatial layers up to date and the platform available.</li><li>Technical advisor to corporate clients, financial institutions and policy makers on water scarcity and financial risk exposure.</li></ul></div></li>
-      </ul>
+      <div class="prose">
+        <p class="eyebrow">Experience</p>
+        <h2>Built on years of applied risk work.</h2>
+        <p>Our team has delivered spatial risk work for companies, financial institutions and sustainability standards. That includes:</p>
+        <ul>
+          <li>technical leadership of a global water risk platform used by companies and investors, keeping more than 80 global spatial layers up to date</li>
+          <li>advising corporate clients, financial institutions and policy makers on water scarcity and financial risk exposure</li>
+          <li>reviewing sourcing risk methods for agricultural supply chains across several regions</li>
+          <li>integrating high-resolution ESG datasets into risk models for international sourcing standards</li>
+          <li>coordinating EUDR verification for large agricultural importers</li>
+        </ul>
+      </div>
     </div>
   </section>
 
   <section>
     <div class="wrap">
-      <p class="eyebrow">Related work</p>
-      <h2>Selected projects &amp; publications.</h2>
-      <ul class="pubs">
-        <li><a href="https://wwf.medium.com/lets-talk-data-new-data-in-wwf-water-risk-filter-will-help-companies-better-assess-risks-in-a-44335e306760" target="_blank" rel="noopener"><span class="type">Blog</span><div><h3>Let's talk data: new data in the WWF Water Risk Filter helps companies better assess risks</h3><span class="meta">WWF on Medium · Water Risk Filter</span></div><span class="go" aria-hidden="true">↗</span></a></li>
-        <li><a href="../publications/wwf_waterstewardship_brief_web_final.pdf" target="_blank" rel="noopener"><span class="type">Brief</span><div><h3>Water Stewardship Revisited: shifting the narrative from risk to value creation</h3><span class="meta">WWF-Germany, 2018 · Maps · PDF</span></div><span class="go" aria-hidden="true">↗</span></a></li>
-        <li><a href="../publications/wwf_valuing_rivers__final_.pdf" target="_blank" rel="noopener"><span class="type">Report</span><div><h3>Valuing Rivers: how the diverse benefits of healthy rivers underpin economies</h3><span class="meta">WWF, 2018 · Spatial analysis and maps · PDF</span></div><span class="go" aria-hidden="true">↗</span></a></li>
-      </ul>
+      <div class="prose">
+        <p class="eyebrow">References</p>
+        <h2>Further reading.</h2>
+        <ol class="refs">
+          <li id="ref-1">Lèbre, É., Czarnota, K., Walsh, S.D.C., et al. <em>ESG mapping of the Australian mining sector: the state of play on mobilising spatial datasets for decision making.</em> Preprint (EarthArXiv), submitted to <em>Resources Policy</em>.</li>
+          <li id="ref-2">Nardo, M., Saisana, M., Saltelli, A., Tarantola, S., Hoffmann, A., Giovannini, E. (2008). <em>Handbook on Constructing Composite Indicators: Methodology and User Guide.</em> OECD and European Commission Joint Research Centre.</li>
+          <li id="ref-3">Sonter, L.J., Dade, M.C., Watson, J.E.M., Valenta, R.K. (2020). Renewable energy production will exacerbate mining threats to biodiversity. <em>Nature Communications</em> 11.</li>
+        </ol>
+      </div>
     </div>
   </section>
 
