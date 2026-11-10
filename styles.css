@@ -282,29 +282,26 @@ figcaption.split .credit { right: 8px; bottom: 8px; }
 }
 
 /* Hero illustration: satellite over the Earth's limb, monitoring a forest */
-.hero-art { position: absolute; top: 50%; right: max(0px, calc((100% - var(--max)) / 2 - 40px)); transform: translateY(-50%); width: min(540px, 47vw); height: auto; pointer-events: none; overflow: visible; }
+.hero-art { position: absolute; top: 50%; right: max(0px, calc((100% - var(--max)) / 2 - 40px)); transform: translateY(-50%); width: min(540px, 47vw); height: auto; pointer-events: none; overflow: visible; z-index: 1; }
 .hero-art .limb { fill: none; stroke: #e8f4ff; stroke-width: 1.2; opacity: .9; }
 .hero-art .atmo { fill: none; stroke: #7fb8ec; stroke-width: 9; opacity: .55; }
-.hero-art .orbit { fill: none; stroke: var(--brand); stroke-width: 1.1; stroke-dasharray: 3 5; opacity: .35; }
-.hero-art .raster rect { stroke: #fff; stroke-width: 1; stroke-opacity: .35; }
-.hero-art .raster .open { fill: #fff; fill-opacity: .07; }
-.hero-art .raster .forest { fill: #2f8a5c; fill-opacity: .72; }
-.hero-art .raster .alert { fill: #e9a53a; fill-opacity: .95; stroke-opacity: .85; animation: hero-alert 2.4s ease-in-out infinite; }
-.hero-art .footprint { fill: none; stroke: #fff; stroke-width: 1.4; stroke-dasharray: 4 3; }
-.hero-art .scan { stroke: #ffd27a; stroke-width: 1.6; opacity: .85; animation: hero-scan 4.5s ease-in-out infinite alternate; }
-.hero-art .swath { fill: url(#swathGrad); stroke: var(--brand); stroke-width: .8; stroke-opacity: .3; }
-.hero-art .sat .body { fill: var(--brand); }
-.hero-art .sat .panel { fill: var(--surface); stroke: var(--brand); stroke-width: 1.4; }
-.hero-art .sat .panel-grid, .hero-art .sat .strut { fill: none; stroke: var(--brand); stroke-width: 1.2; }
-.hero-art .sat .lens { fill: var(--accent); }
-.hero-art .sat { animation: hero-float 6s ease-in-out infinite; }
-@keyframes hero-scan { from { transform: translateY(-95px); } to { transform: translateY(95px); } }
-@keyframes hero-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -5px; } }
-@keyframes hero-alert { 0%, 100% { fill-opacity: .95; } 50% { fill-opacity: .45; } }
-@media (prefers-reduced-motion: reduce) { .hero-art .scan, .hero-art .sat, .hero-art .raster .alert { animation: none; } }
+.hero-art text { font: 500 8px ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .06em; fill: var(--muted); }
+.hero-art .grat { fill: none; stroke: #fff; stroke-width: .6; opacity: .24; }
+.hero-art .ticks { fill: none; stroke: var(--brand); stroke-width: .8; opacity: .4; }
+.hero-art .swipe .div { stroke: #fff; stroke-width: 1.2; }
+.hero-art .swipe text { font-size: 7.5px; }
+.hero-art .swipe-handle { pointer-events: auto; cursor: ew-resize; touch-action: pan-y; outline: none; user-select: none; -webkit-user-select: none; }
+.hero-art .swipe-handle .hit { fill: transparent; }
+.hero-art .swipe-handle .knob { fill: #fff; stroke: rgba(0, 0, 0, .25); stroke-width: 1; transition: r .15s ease; }
+.hero-art .swipe-handle .arrows { fill: none; stroke: #1b2a33; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.hero-art .swipe-handle:hover .knob, .hero-art .swipe-handle.dragging .knob { r: 14px; }
+.hero-art .swipe-handle:focus-visible .knob { stroke: var(--brand); stroke-width: 3; }
+.hero-credit { position: absolute; top: calc(50% + min(540px, 47vw) / 2 + 4px); right: max(0px, calc((100% - var(--max)) / 2 - 40px)); width: min(540px, 47vw); margin: 0; text-align: center; font: 500 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .04em; color: var(--muted); }
 .hero .wrap > p.lead { max-width: min(58ch, 52%); }
 @media (max-width: 960px) {
-  .hero-art { top: 24px; right: -80px; transform: none; width: 360px; opacity: .3; }
+  .hero-art { top: 24px; right: -80px; transform: none; width: 360px; opacity: .3; z-index: auto; }
+  .hero-art .swipe text, .hero-art .swipe-handle { display: none; }
+  .hero-credit { position: static; width: auto; max-width: var(--max); margin: 20px auto 0; padding: 0 24px; text-align: left; }
   .hero .wrap > p.lead { max-width: 58ch; }
 }
 
