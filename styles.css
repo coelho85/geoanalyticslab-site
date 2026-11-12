@@ -91,11 +91,11 @@ header.nav {
 .nav .btn { padding: 8px 16px; color: var(--brand-ink); white-space: nowrap; }
 
 /* Hero */
-.hero { position: relative; overflow: hidden; padding: 112px 0 104px; }
+.hero { position: relative; overflow: hidden; padding: 112px 0 168px; }
 .hero .contours { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
 .hero .contours path { fill: none; stroke: var(--contour); stroke-width: 1.4; }
 .hero .wrap { position: relative; }
-.hero h1 { font-size: clamp(38px, 6vw, 68px); max-width: 15ch; letter-spacing: -0.01em; }
+.hero h1 { font-size: clamp(38px, 6vw, 68px); max-width: 20ch; letter-spacing: -0.01em; }
 .hero h1 em { font-style: italic; color: var(--brand); font-weight: 400; }
 .hero p.lead { font-size: clamp(18px, 2vw, 21px); color: var(--muted); max-width: 58ch; margin: 24px 0 36px; }
 .hero .ctas { display: flex; gap: 12px; flex-wrap: wrap; }
@@ -298,10 +298,13 @@ figcaption.split .credit { right: 8px; bottom: 8px; }
 .hero-art .swipe-handle:focus-visible .knob { stroke: var(--brand); stroke-width: 3; }
 .hero-credit { position: absolute; top: calc(50% + min(540px, 47vw) / 2 + 4px); right: max(0px, calc((100% - var(--max)) / 2 - 40px)); width: min(540px, 47vw); margin: 0; text-align: center; font: 500 11px/1.3 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .04em; color: var(--muted); }
 .hero .wrap > p.lead { max-width: min(58ch, 52%); }
+/* coords sit level with the bottom edge of the hero image */
+.hero > .coords { position: absolute; margin: 0; left: max(24px, calc((100% - var(--max)) / 2 + 24px)); top: calc(50% + min(540px, 47vw) / 2); transform: translateY(-100%); }
 @media (max-width: 960px) {
   .hero-art { top: 24px; right: -80px; transform: none; width: 360px; opacity: .3; z-index: auto; }
   .hero-art .swipe text, .hero-art .swipe-handle { display: none; }
   .hero-credit { position: static; width: auto; max-width: var(--max); margin: 20px auto 0; padding: 0 24px; text-align: left; }
+  .hero > .coords { position: static; transform: none; max-width: var(--max); margin: 40px auto 0; padding: 0 24px; }
   .hero .wrap > p.lead { max-width: 58ch; }
 }
 
