@@ -71,13 +71,18 @@ header.nav {
 .nav ul a:hover { color: var(--ink); }
 .nav ul .gh a { display: inline-flex; align-items: center; gap: 6px; }
 .nav ul { align-items: center; }
+.nav ul .lang { display: flex; gap: 2px; font-size: 13px; font-weight: 600; letter-spacing: .04em; }
+.nav ul .lang a { padding: 4px 7px; border-radius: 6px; }
+.nav ul .lang a[aria-current] { color: var(--ink); background: color-mix(in srgb, var(--line) 75%, transparent); }
 .menu-toggle { display: none; padding: 9px; border: 1px solid var(--line); border-radius: 10px; background: transparent; color: var(--ink); cursor: pointer; line-height: 0; }
-@media (max-width: 820px) {
+@media (max-width: 1100px) {
   .menu-toggle { display: block; }
   .nav ul { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: stretch; gap: 0; padding: 8px 16px 16px; background: var(--bg); border-bottom: 1px solid var(--line); box-shadow: 0 12px 24px rgba(0,0,0,.08); }
   .nav.open ul { display: flex; }
   .nav ul li a:not(.btn) { display: flex; align-items: center; gap: 6px; padding: 12px 8px; color: var(--ink); }
   .nav ul .btn { display: block; margin-top: 8px; padding: 12px 16px; text-align: center; }
+  .nav ul li.lang { gap: 6px; padding: 8px 0 4px; }
+  .nav ul li.lang a { padding: 8px 12px; }
 }
 
 .btn {

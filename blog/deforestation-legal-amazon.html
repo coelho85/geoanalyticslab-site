@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Monitoring deforestation in the Brazilian Legal Amazon · GeoAnalytics Lab</title>
+<meta name="description" content="A comparison of three reference methodologies (Global Forest Watch, PRODES and MapBiomas) and how their technical definitions shape annual deforestation rates in the Brazilian Legal Amazon between 2011 and 2025.">
+<meta property="og:title" content="Monitoring deforestation in the Brazilian Legal Amazon · GeoAnalytics Lab">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://geoanalyticslab.com/blog/deforestation-legal-amazon.html">
+<link rel="canonical" href="https://geoanalyticslab.com/blog/deforestation-legal-amazon.html">
+<link rel="alternate" hreflang="en" href="https://geoanalyticslab.com/blog/deforestation-legal-amazon.html">
+<link rel="alternate" hreflang="pt" href="https://geoanalyticslab.com/pt/blog/desmatamento-amazonia-legal.html">
+<link rel="alternate" hreflang="x-default" href="https://geoanalyticslab.com/blog/deforestation-legal-amazon.html">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="../pictures/favicon-192.png">
+<link rel="icon" type="image/png" sizes="96x96" href="../pictures/favicon-96.png">
+<link rel="apple-touch-icon" href="../pictures/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&text=f&display=swap" rel="stylesheet"><!-- only the letter f, replacing Fraunces' f -->
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<style>
+  #map { height: 560px; border: 1px solid var(--line); border-radius: 12px; background: #dfe3e6; }
+  @media (max-width: 600px) { #map { height: 420px; } }
+  #map section { padding: 0; border-top: 0; }
+  .leaflet-control-layers { font: 13px/1.4 Inter, sans-serif; }
+  .table-wrap { overflow-x: auto; margin: 32px 0 0; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+  .compare { border-collapse: collapse; width: 100%; min-width: 860px; font-size: 14px; line-height: 1.5; }
+  .compare th, .compare td { padding: 14px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+  .compare thead th { font-weight: 600; color: var(--ink); background: var(--bg); }
+  .compare tbody th { font-weight: 600; color: var(--ink); width: 14%; }
+  .compare td { color: var(--muted); }
+  .compare tr:last-child th, .compare tr:last-child td { border-bottom: 0; }
+  .prose h2 { margin-top: 56px; }
+  .prose h2:first-child { margin-top: 0; }
+  .viz { --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; margin: 32px 0 0; padding: 24px 24px 16px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); position: relative; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .viz { --s1: #3987e5; --s2: #d95926; --s3: #199e70; } }
+  :root[data-theme="dark"] .viz { --s1: #3987e5; --s2: #d95926; --s3: #199e70; }
+  .viz h3 { font-size: 19px; margin: 0; }
+  .viz .sub { color: var(--muted); font-size: 14px; margin: 4px 0 16px; }
+  .viz .legend { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 14px; color: var(--ink); margin-bottom: 12px; }
+  .viz .legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .viz .legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  .viz svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .viz .tick { font: 12px Inter, sans-serif; fill: var(--muted); }
+  .viz .grid { stroke: var(--line); stroke-width: 1; }
+  .viz .hit { fill: transparent; cursor: default; }
+  .viz .hit.on { fill: var(--line); opacity: .45; }
+  .viz .tip { position: absolute; pointer-events: none; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 4px 14px rgba(0,0,0,.12); padding: 10px 12px; font-size: 13px; line-height: 1.5; min-width: 230px; opacity: 0; transition: opacity .12s; }
+  .viz .tip b { display: block; margin-bottom: 4px; }
+  .viz .tip .row { display: flex; align-items: center; gap: 8px; }
+  .viz .tip .row em { font-style: normal; margin-left: auto; padding-left: 12px; font-variant-numeric: tabular-nums; font-weight: 600; }
+  .viz .tip .row i { width: 10px; height: 10px; border-radius: 2px; }
+  .viz .tip .det { color: var(--muted); font-size: 12px; padding-left: 18px; }
+  .viz details { margin-top: 12px; font-size: 14px; color: var(--muted); }
+  .viz summary { cursor: pointer; }
+  .viz details table { margin-top: 12px; min-width: 520px; }
+  .viz details .table-wrap { margin-top: 8px; border: 0; }
+  .viz .compare td { font-variant-numeric: tabular-nums; }
+  .map-legend { background: #fff; color: #222; padding: 10px 14px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,.25); font: 13px/1.4 Inter, sans-serif; }
+  .map-legend b { display: block; margin-bottom: 6px; font-weight: 600; }
+  .map-legend .item { display: flex; align-items: center; gap: 8px; }
+  .map-legend .swatch { width: 20px; height: 14px; border: 2px solid #ffd23f; background: rgba(255,210,63,.15); }
+</style>
+</head>
+<body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="GeoAnalytics Lab home">
+      <img src="../pictures/logo.png" width="40" height="40" alt="">
+      <span>GeoAnalytics<b>Lab</b></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <ul id="nav-links">
+      <li><a href="../index.html#services">What we do</a></li>
+      <li><a href="../index.html#work">Work</a></li>
+      <li><a href="index.html">Blog</a></li>
+      <li><a href="../index.html#partners">Partners</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li class="lang" aria-label="Language"><a href="deforestation-legal-amazon.html" hreflang="en" lang="en" aria-label="English" aria-current="page">EN</a><a href="../pt/blog/desmatamento-amazonia-legal.html" hreflang="pt" lang="pt-BR" aria-label="Português">PT</a></li>
+      <li><a class="btn" href="#contact">Get in touch</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+  <div class="page-hero">
+    <div class="wrap">
+      <a class="crumb" href="index.html"><span aria-hidden="true">←</span> Blog</a>
+      <p class="eyebrow">Article · Amazon</p>
+      <h1>Monitoring deforestation in the Brazilian Legal Amazon</h1>
+      <p class="lead">A comparison of three reference methodologies (Global Forest Watch, PRODES and MapBiomas) and how their technical definitions shape annual deforestation rates between 2011 and 2025.</p>
+      <p style="font-size:14px; color:var(--muted); margin:16px 0 0">Translated from the <a href="../pt/blog/desmatamento-amazonia-legal.html" hreflang="pt">original Portuguese article</a>.</p>
+    </div>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="prose">
+        <p>A few weeks after the election period, it is possible to return more calmly to the analysis of Brazil's environmental reality, in particular the state of the Amazon rainforest and the recent evolution of deforestation rates. During the presidential campaign, the effectiveness of environmental policies in conserving the forest was at the centre of the debate, and the data presented often portrayed conflicting realities.</p>
+        <p>At GeoAnalytics Lab, we see geotechnologies as among the most robust tools for verifying changes in land use and land cover. Besides providing objective data for comparative and statistical analyses, satellite imagery makes it possible to build consistent time series, a solid basis for assessing the effectiveness of public policies. However, as we will show in this article, there is no absolute truth, not even in remote sensing: results invariably depend on the technical definitions and methodologies adopted.</p>
+        <p>For deforestation in the Amazon, there are several well-established methodologies, applied by institutions of recognised excellence in the space sciences. Precisely because their criteria differ, these methodologies produce different results, which often raises doubts about their validity. To illustrate the issue, we analysed three systems widely used to monitor deforestation: <strong>Global Forest Watch</strong>, <strong>PRODES</strong> and <strong>MapBiomas</strong>. As an example, we calculated annual deforestation rates between 2011 and 2025 according to each of these methodologies.</p>
+
+        <h2>Study area: the Legal Amazon</h2>
+      </div>
+      <figure style="margin: 32px 0 0">
+        <div id="map" role="region" aria-label="Interactive map of the boundaries of the Legal Amazon"></div>
+        <figcaption style="font-size:14px; color:var(--muted); margin-top:8px">Boundaries of the Legal Amazon (IBGE, 2024). Basemap: Esri World Imagery.</figcaption>
+      </figure>
+
+      <div class="prose" style="margin-top: 56px">
+        <h2>Global Forest Watch</h2>
+        <p>Global Forest Watch (GFW) is a global platform coordinated by the World Resources Institute (WRI) in partnership with the University of Maryland (UMD), among other institutions. It focuses on monitoring the world's forests in near real time, with <strong>tree cover loss</strong> as its main indicator.</p>
+        <p>Two factors set GFW apart from the other methodologies. The first is spatial resolution: detection is done pixel by pixel on 30 m Landsat imagery, which corresponds to a minimum mapping unit of 0.09 ha. The second is the concept of tree cover loss itself, which is broader than deforestation in the strict sense and includes vegetation loss from fires and harvesting in forest plantations. For these reasons, the areas estimated by GFW tend to be larger than those of the other two systems.</p>
+        <p>Our Python code, which accesses the public GFW dataset (Hansen Global Forest Change) in Google Earth Engine through the geemap library, is available <a href="https://github.com/coelho85/deforestationLegalAmazon" target="_blank" rel="noopener">in this GitHub repository</a>.</p>
+
+        <h2>PRODES</h2>
+        <p>PRODES (the Legal Amazon Deforestation Satellite Monitoring Project) was created in 1988 by Brazil's National Institute for Space Research (INPE) and is the Brazilian government's official source for the annual deforestation rate in the Legal Amazon. Unlike GFW, PRODES relies predominantly on <strong>visual interpretation</strong> of imagery by analysts. In addition, its minimum mappable area in the Legal Amazon is 6.25 ha, so smaller clearings are not counted.</p>
+        <p>PRODES maps only the clear-cutting of primary vegetation. Forest loss caused by fire, whether natural or human-induced, is not counted as deforestation and is tracked by other INPE monitoring programmes. PRODES rates are therefore expected to be lower than those obtained by GFW.</p>
+
+        <h2>MapBiomas</h2>
+        <p>MapBiomas is a collaborative Brazilian initiative that brings together NGOs, universities and technology companies. Its aim is to complement existing analyses, covering not only deforestation in the Amazon but also annual land cover and land use mapping across the whole country.</p>
+        <p>MapBiomas deforestation data consider only the <strong>complete removal of native vegetation</strong> (forest, savanna or grassland) and exclude losses caused by fire, selective logging and other partial disturbances. Besides detecting deforestation, MapBiomas classifies land use after the vegetation has been removed. The main series uses Landsat spatial resolution (30 m, or 0.09 ha per pixel), although products at other resolutions exist.</p>
+
+        <h2>Key differences between the methodologies</h2>
+      </div>
+
+      <div class="table-wrap">
+        <table class="compare">
+          <thead>
+            <tr><th scope="col">Feature</th><th scope="col">PRODES (INPE)</th><th scope="col">Global Forest Watch (GFW / UMD)</th><th scope="col">MapBiomas (Land Cover and Use)</th></tr>
+          </thead>
+          <tbody>
+            <tr><th scope="row">Detection method</th><td>Predominantly visual photo-interpretation by analysts, with semi-automated support since 2024.</td><td>Fully automated, using machine learning algorithms.</td><td>Fully automated, with pixel-by-pixel classification in Google Earth Engine.</td></tr>
+            <tr><th scope="row">Spatial resolution</th><td>10 to 30 m (Landsat, CBERS and Sentinel-2).</td><td>30 m (Landsat time series); rapid alerts use 10 m.</td><td>30 m (Landsat) and a 10 m version (Sentinel-2, from 2016).</td></tr>
+            <tr><th scope="row">What it maps</th><td>Only clear-cutting (complete removal) of primary native vegetation.</td><td>Any tree cover loss (native forest, plantations, fire and degradation).</td><td>Annual land use transitions (forest, pasture, agriculture, water, urban areas).</td></tr>
+            <tr><th scope="row">Minimum detected area</th><td>Polygons from 6.25 ha (Legal Amazon) or 1 ha (other biomes).</td><td>0.09 ha pixels (30 × 30 m).</td><td>0.09 ha (30 m) or 0.01 ha (10 m) pixels.</td></tr>
+            <tr><th scope="row">Reporting period</th><td>PRODES year: 1 August to 31 July of the following year.</td><td>Calendar year: 1 January to 31 December.</td><td>Calendar year (annual time series since 1985).</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="prose" style="margin-top: 56px">
+        <h2>Results: annual deforestation between 2011 and 2025</h2>
+        <p>We applied the three datasets to the same study area, the Legal Amazon, and calculated the area deforested each year. As expected, GFW tree cover loss is the highest in almost every year, MapBiomas sits in the middle and PRODES shows the lowest rates.</p>
+      </div>
+
+      <figure class="viz" id="viz">
+        <h3>Annual deforestation in the Legal Amazon, by methodology</h3>
+        <p class="sub">Area in million hectares · hover over a year to see the values</p>
+        <div class="legend" aria-hidden="true">
+          <span><i style="background:var(--s1)"></i>Global Forest Watch: tree cover loss</span>
+          <span><i style="background:var(--s2)"></i>MapBiomas: native vegetation removal</span>
+          <span><i style="background:var(--s3)"></i>PRODES (INPE): clear-cutting</span>
+        </div>
+        <svg id="viz-svg" role="img" aria-label="Bar chart of the area deforested each year between 2011 and 2025 according to GFW, MapBiomas and PRODES. The full data are in the table below."></svg>
+        <div class="tip" id="viz-tip" role="status" aria-live="polite"></div>
+        <details>
+          <summary>View data table</summary>
+          <div class="table-wrap"><table class="compare" id="viz-table">
+            <thead><tr><th scope="col">Year</th><th scope="col">GFW (ha)</th><th scope="col">MapBiomas (ha)</th><th scope="col">PRODES (ha)</th></tr></thead>
+            <tbody></tbody>
+          </table></div>
+        </details>
+        <figcaption style="font-size:13px; color:var(--muted); margin-top:12px">Sources: Hansen Global Forest Change v1.13 (UMD/GFW); MapBiomas Collection 10, deforestation of primary and secondary vegetation (series available up to 2024); PRODES/INPE (PRODES year, August to July). Processing: GeoAnalytics Lab, Google Earth Engine (<a href="https://github.com/coelho85/deforestationLegalAmazon" target="_blank" rel="noopener">code on GitHub</a>).</figcaption>
+      </figure>
+
+      <div class="prose" id="conclusion" style="margin-top: 56px">
+        <h2>Conclusion</h2>
+        <p>The results confirm that the choice of methodology has a direct impact on deforestation estimates. In an area the size of the Legal Amazon, more than 5 million km² and almost 60% of Brazil's territory, these differences become especially visible.</p>
+        <p>As expected, PRODES produces the most conservative estimates. This stems from three characteristics described above: the minimum mappable area of 6.25 ha, the exclusion of vegetation loss caused by fire, and the fact that secondary forest is not taken into account. Once an area of primary forest is classified as deforested, it is no longer considered in subsequent years, regardless of what happens to it afterwards. PRODES is therefore the most suitable dataset when the goal is to quantify the clear-cutting of primary forest in polygons of 6.25 ha or more. For broader analyses, INPE runs other programmes with public data that can complement PRODES, such as the <a href="https://terrabrasilis.dpi.inpe.br/queimadas/portal/" target="_blank" rel="noopener">Queimadas Programme</a>, which monitors active fires and burned areas, and <a href="https://www.terraclass.gov.br/" target="_blank" rel="noopener">TerraClass</a>, which tracks land use and the dynamics of secondary vegetation in deforested areas.</p>
+        <p>For a broad view that captures all disturbances to tree vegetation at high spatial resolution (0.09 ha), Global Forest Watch is a good option. There is, however, an important caveat: because GFW measures tree cover loss rather than deforestation in the strict sense, harvesting in forest plantations may be counted if these areas have not been excluded beforehand. This filter can be applied afterwards by cross-referencing validated geographic datasets, removing false positives, one of the major challenges in remote sensing. We therefore recommend using GFW data with caution and, whenever possible, applying this kind of filtering.</p>
+        <p>MapBiomas stands out as a very interesting alternative. Besides working at the same 0.09 ha resolution, it distinguishes deforestation of primary and secondary vegetation, allowing users to consider one, the other or both. Going beyond deforestation itself, MapBiomas maps land use and land cover transitions and classifies deforested areas according to their subsequent use, providing a basis for deeper analyses of the socioeconomic dynamics behind vegetation loss.</p>
+        <p>Finally, the sharp discrepancy seen in 2024, when GFW records a rate far higher than the other methodologies, is mainly due to tree cover loss caused by forest fires. In the scientific literature, fire is traditionally associated with forest degradation rather than deforestation. For this reason, PRODES and MapBiomas simply do not include these losses in their deforestation estimates. In the case of MapBiomas, it is worth noting that this study uses the Land Cover and Use series, which counts only the complete removal of native vegetation and does not consider areas affected by fire. More than pointing to which dataset is correct, the comparison shows that each methodology answers a different question, and that the choice of data should start from a clear definition of the goal of the analysis.</p>
+      </div>
+
+      <div class="prose" id="references" style="margin-top: 56px">
+        <h2>References</h2>
+        <ol style="font-size:15px; padding-left:1.25em">
+          <li>HANSEN, M. C. et al. High-Resolution Global Maps of 21st-Century Forest Cover Change. <em>Science</em>, v. 342, p. 850–853, 2013. DOI: <a href="https://doi.org/10.1126/science.1244693" target="_blank" rel="noopener">10.1126/science.1244693</a>.</li>
+          <li>GLOBAL FOREST WATCH. Explicação dos dados do Global Forest Watch sobre a perda de cobertura arbórea de 2024. Available at: <a href="https://www.globalnaturewatch.org/blog/pt/data-and-tools/explicacao-dos-dados-do-global-forest-watch-sobre-a-perda-de-cobertura-arborea-de-2024/" target="_blank" rel="noopener">globalnaturewatch.org</a>.</li>
+          <li>ALMEIDA, C. A. et al. <em>Metodologia utilizada nos sistemas PRODES e DETER</em>. 2. ed. (atualizada). São José dos Campos: INPE, 2022. 47 p.</li>
+          <li>INPE. PRODES: monitoramento anual da supressão de vegetação nativa. Available at: <a href="https://data.inpe.br/biomasbr/prodes-monitoramento-anual-da-supressao-de-vegetacao-nativa/" target="_blank" rel="noopener">data.inpe.br</a>.</li>
+          <li>INPE. Programa Queimadas: portal de monitoramento de queimadas e incêndios florestais. Available at: <a href="https://terrabrasilis.dpi.inpe.br/queimadas/portal/" target="_blank" rel="noopener">terrabrasilis.dpi.inpe.br/queimadas</a>.</li>
+          <li>INPE; EMBRAPA. TerraClass: mapeamento do uso e cobertura da terra em áreas desflorestadas. Available at: <a href="https://www.terraclass.gov.br/" target="_blank" rel="noopener">terraclass.gov.br</a>.</li>
+          <li>PROJETO MAPBIOMAS. Mapeamento Anual de Cobertura e Uso da Terra no Brasil – Coleção 11. Accessed: 18 Nov 2026. Available at: <a href="https://brasil.mapbiomas.org" target="_blank" rel="noopener">brasil.mapbiomas.org</a>.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+<section id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <h2>Have a project in mind? Let's talk.</h2>
+        <p>Tell us briefly about your project. We usually reply within one working day.</p>
+        <div class="ctas">
+          <a class="btn" href="mailto:contact@geoanalyticslab.com">contact@geoanalyticslab.com</a>
+          <a class="btn ghost" href="https://wa.me/34604816443" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn ghost" href="https://www.linkedin.com/company/geo-analytics-lab/" target="_blank" rel="noopener">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y">2026</span> GeoAnalytics Lab · Barcelona</span>
+    <span>geoanalyticslab.com</span>
+  </div>
+</footer>
+
+<script src="../site.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="amazonia_legal.js"></script>
+<script>
+(function () {
+  var map = L.map('map', { scrollWheelZoom: false });
+  var sat = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Imagery &copy; Esri, Maxar, Earthstar Geographics', maxZoom: 18 }).addTo(map);
+  var labels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 18, opacity: 0.8 }).addTo(map);
+  var light = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: '&copy; Esri', maxZoom: 16 });
+
+  var amz = L.geoJSON(window.AMAZONIA_LEGAL, {
+    style: { color: '#ffd23f', weight: 2.5, fillColor: '#ffd23f', fillOpacity: 0.06 }
+  }).bindTooltip('Legal Amazon', { sticky: true }).addTo(map);
+  map.fitBounds(amz.getBounds(), { padding: [10, 10] });
+
+  L.control.layers({ 'Satellite': sat, 'Light map': light }, { 'Legal Amazon': amz, 'Names and borders': labels }, { collapsed: false }).addTo(map);
+
+  var legend = L.control({ position: 'bottomright' });
+  legend.onAdd = function () {
+    var d = L.DomUtil.create('div', 'map-legend');
+    d.innerHTML = '<b>Legend</b><div class="item"><span class="swatch"></span>Legal Amazon</div>';
+    return d;
+  };
+  legend.addTo(map);
+  map.on('click', function () { map.scrollWheelZoom.enable(); });
+  map.on('mouseout', function () { map.scrollWheelZoom.disable(); });
+})();
+</script>
+<script>
+(function () {
+  var Y = [2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025];
+  var GFW = [1307234,1875740,1381704,1972596,1752583,4484444,3808282,2465508,2312245,2879232,2512439,2846002,2450688,4077210,2548274];
+  var MBP = [1120004,1200535,1459015,1320254,1526997,1514866,1276055,1311210,1927333,1934213,2048429,2192221,1918475,1342787,null];
+  var MBS = [298133,354349,429058,421707,471944,466263,386832,393119,475072,408255,441588,614964,759069,305126,null];
+  var PRO = [641800,457100,589100,501200,620700,789300,694700,753600,1012900,1085100,1303800,1159400,906400,651800,573100];
+  var MB = MBP.map(function (v, i) { return v == null ? null : v + MBS[i]; });
+  var S = [{ k: 's1', name: 'GFW', d: GFW }, { k: 's2', name: 'MapBiomas', d: MB }, { k: 's3', name: 'PRODES', d: PRO }];
+  var fmt = function (v) { return v == null ? 'no data' : Math.round(v).toLocaleString('en-US') + ' ha'; };
+  var NS = 'http://www.w3.org/2000/svg';
+  var root = document.getElementById('viz'), svg = document.getElementById('viz-svg'), tip = document.getElementById('viz-tip');
+
+  var tb = document.querySelector('#viz-table tbody');
+  Y.forEach(function (y, i) {
+    var tr = document.createElement('tr');
+    tr.innerHTML = '<th scope="row">' + y + '</th><td>' + fmt(GFW[i]).replace(' ha','') + '</td><td>' + fmt(MB[i]).replace(' ha','') + '</td><td>' + fmt(PRO[i]).replace(' ha','') + '</td>';
+    tb.appendChild(tr);
+  });
+
+  function el(n, a, p) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); (p || svg).appendChild(e); return e; }
+  function bar(x, y0, w, h, r) {   // rounded top, square base
+    r = Math.min(r, w / 2, h);
+    return 'M' + x + ',' + y0 + 'v' + (-h + r) + 'q0,' + (-r) + ' ' + r + ',' + (-r) + 'h' + (w - 2 * r) + 'q' + r + ',0 ' + r + ',' + r + 'v' + (h - r) + 'z';
+  }
+
+  function draw() {
+    var W = Math.max(320, root.clientWidth - 48), narrow = W < 560;
+    var H = narrow ? 300 : 360, L = 34, R = 4, T = 8, B = 28;
+    var pw = W - L - R, ph = H - T - B, max = 5e6;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + H);
+    svg.innerHTML = '';
+    var yv = function (v) { return T + ph - v / max * ph; };
+    for (var t = 0; t <= 5; t++) {
+      el('line', { x1: L, x2: W - R, y1: yv(t * 1e6), y2: yv(t * 1e6), class: 'grid' });
+      el('text', { x: L - 8, y: yv(t * 1e6) + 4, 'text-anchor': 'end', class: 'tick' }).textContent = t;
+    }
+    var gw = pw / Y.length, inner = gw * (narrow ? 0.86 : 0.78), bw = (inner - 4) / 3;
+    Y.forEach(function (y, i) {
+      var gx = L + i * gw, x0 = gx + (gw - inner) / 2;
+      var hit = el('rect', { x: gx, y: T, width: gw, height: ph, class: 'hit', 'data-i': i });
+      S.forEach(function (s, j) {
+        var v = s.d[i]; if (v == null) return;
+        el('path', { d: bar(x0 + j * (bw + 2), yv(0), bw, yv(0) - yv(v), 4), fill: 'var(--' + s.k + ')', 'pointer-events': 'none' });
+      });
+      if (!narrow || i % 2 === 0) el('text', { x: gx + gw / 2, y: H - 8, 'text-anchor': 'middle', class: 'tick' }).textContent = narrow ? "'" + String(y).slice(2) : y;
+    });
+    el('line', { x1: L, x2: W - R, y1: yv(0), y2: yv(0), stroke: 'var(--muted)', 'stroke-width': 1 });
+
+    function show(i) {
+      svg.querySelectorAll('.hit').forEach(function (h) { h.classList.toggle('on', +h.dataset.i === i); });
+      var mbDet = MB[i] == null ? '' : '<div class="det">primary ' + fmt(MBP[i]) + ' · secondary ' + fmt(MBS[i]) + '</div>';
+      tip.innerHTML = '<b>' + Y[i] + '</b>' +
+        '<div class="row"><i style="background:var(--s1)"></i>GFW<em>' + fmt(GFW[i]) + '</em></div>' +
+        '<div class="row"><i style="background:var(--s2)"></i>MapBiomas<em>' + fmt(MB[i]) + '</em></div>' + mbDet +
+        '<div class="row"><i style="background:var(--s3)"></i>PRODES<em>' + fmt(PRO[i]) + '</em></div>';
+      var scale = svg.getBoundingClientRect().width / W;
+      var cx = 24 + (L + (i + 0.5) * gw) * scale, tw = tip.offsetWidth;
+      var left = cx + 16 + tw > root.clientWidth ? cx - 16 - tw : cx + 16;
+      tip.style.left = Math.max(8, left) + 'px';
+      tip.style.top = (svg.offsetTop + 8) + 'px';
+      tip.style.opacity = 1;
+    }
+    function hide() { tip.style.opacity = 0; svg.querySelectorAll('.hit.on').forEach(function (h) { h.classList.remove('on'); }); }
+    svg.querySelectorAll('.hit').forEach(function (h) {
+      h.addEventListener('mouseenter', function () { show(+h.dataset.i); });
+      h.addEventListener('click', function () { show(+h.dataset.i); });
+    });
+    svg.onmouseleave = hide;
+  }
+  draw();
+  var rt; window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(draw, 120); });
+})();
+</script>
+</body>
+</html>
