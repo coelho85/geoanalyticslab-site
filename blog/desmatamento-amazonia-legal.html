@@ -128,21 +128,21 @@
       <div class="table-wrap">
         <table class="compare">
           <thead>
-            <tr><th scope="col">Característica</th><th scope="col">PRODES (INPE)</th><th scope="col">Global Forest Watch (GFW / UMD)</th><th scope="col">MapBiomas (Uso e Cobertura)</th><th scope="col">MapBiomas Alerta</th></tr>
+            <tr><th scope="col">Característica</th><th scope="col">PRODES (INPE)</th><th scope="col">Global Forest Watch (GFW / UMD)</th><th scope="col">MapBiomas (Uso e Cobertura)</th></tr>
           </thead>
           <tbody>
-            <tr><th scope="row">Método de detecção</th><td>Predominantemente fotointerpretação visual por analistas, com apoio semiautomático desde 2024.</td><td>Totalmente automatizado, por algoritmos de aprendizado de máquina.</td><td>Totalmente automatizado, com classificação pixel a pixel no Google Earth Engine.</td><td>Híbrido: compila alertas automáticos e realiza validação visual e refinamento por analistas.</td></tr>
-            <tr><th scope="row">Resolução espacial</th><td>10 a 30 m (Landsat, CBERS e Sentinel-2).</td><td>30 m (série histórica Landsat); os alertas rápidos usam 10 m.</td><td>30 m (Landsat) e versão de 10 m (Sentinel-2, a partir de 2016).</td><td>3 a 3,7 m (imagens Planet de alta resolução para validação de cada alerta).</td></tr>
-            <tr><th scope="row">O que mapeia</th><td>Apenas corte raso (supressão total) da vegetação nativa primária.</td><td>Qualquer perda de cobertura arbórea (floresta nativa, silvicultura, fogo e degradação).</td><td>Transições anuais de uso da terra (floresta, pastagem, agricultura, água, área urbana).</td><td>Supressão da vegetação nativa (corte raso) confirmada e cruzada com o CAR.</td></tr>
-            <tr><th scope="row">Área mínima detectada</th><td>Polígonos a partir de 6,25 ha (Amazônia Legal) ou 1 ha (demais biomas).</td><td>Pixels de 0,09 ha (30 × 30 m).</td><td>Pixels de 0,09 ha (30 m) ou 0,01 ha (10 m).</td><td>Polígonos validados acima de 0,3 ha.</td></tr>
-            <tr><th scope="row">Período de apuração</th><td>Ano PRODES: 1º de agosto a 31 de julho do ano seguinte.</td><td>Ano civil: 1º de janeiro a 31 de dezembro.</td><td>Ano civil (série histórica anual desde 1985).</td><td>Contínuo, com publicação semanal após validação.</td></tr>
+            <tr><th scope="row">Método de detecção</th><td>Predominantemente fotointerpretação visual por analistas, com apoio semiautomático desde 2024.</td><td>Totalmente automatizado, por algoritmos de aprendizado de máquina.</td><td>Totalmente automatizado, com classificação pixel a pixel no Google Earth Engine.</td></tr>
+            <tr><th scope="row">Resolução espacial</th><td>10 a 30 m (Landsat, CBERS e Sentinel-2).</td><td>30 m (série histórica Landsat); os alertas rápidos usam 10 m.</td><td>30 m (Landsat) e versão de 10 m (Sentinel-2, a partir de 2016).</td></tr>
+            <tr><th scope="row">O que mapeia</th><td>Apenas corte raso (supressão total) da vegetação nativa primária.</td><td>Qualquer perda de cobertura arbórea (floresta nativa, silvicultura, fogo e degradação).</td><td>Transições anuais de uso da terra (floresta, pastagem, agricultura, água, área urbana).</td></tr>
+            <tr><th scope="row">Área mínima detectada</th><td>Polígonos a partir de 6,25 ha (Amazônia Legal) ou 1 ha (demais biomas).</td><td>Pixels de 0,09 ha (30 × 30 m).</td><td>Pixels de 0,09 ha (30 m) ou 0,01 ha (10 m).</td></tr>
+            <tr><th scope="row">Período de apuração</th><td>Ano PRODES: 1º de agosto a 31 de julho do ano seguinte.</td><td>Ano civil: 1º de janeiro a 31 de dezembro.</td><td>Ano civil (série histórica anual desde 1985).</td></tr>
           </tbody>
         </table>
       </div>
 
       <div class="prose" style="margin-top: 56px">
         <h2>Resultados: desmatamento anual entre 2011 e 2025</h2>
-        <p>Aplicamos as três bases à mesma área de estudo, a Amazônia Legal, e calculamos a área desmatada em cada ano. Como esperado, a perda de cobertura arbórea do GFW é a maior em quase todos os anos, o MapBiomas fica em posição intermediária e o PRODES apresenta as menores taxas. Os picos do GFW em 2016, 2017 e 2024 coincidem com anos de seca severa e grande incidência de incêndios, perdas que o PRODES e o MapBiomas não contabilizam como desmatamento.</p>
+        <p>Aplicamos as três bases à mesma área de estudo, a Amazônia Legal, e calculamos a área desmatada em cada ano. Como esperado, a perda de cobertura arbórea do GFW é a maior em quase todos os anos, o MapBiomas fica em posição intermediária e o PRODES apresenta as menores taxas.</p>
       </div>
 
       <figure class="viz" id="viz">
@@ -164,6 +164,28 @@
         </details>
         <figcaption style="font-size:13px; color:var(--muted); margin-top:12px">Fontes: Hansen Global Forest Change v1.13 (UMD/GFW); MapBiomas Coleção 10, desmatamento de vegetação primária e secundária (série disponível até 2024); PRODES/INPE (ano PRODES, de agosto a julho). Processamento: GeoAnalytics Lab, Google Earth Engine (<a href="https://github.com/coelho85/deforestationLegalAmazon" target="_blank" rel="noopener">código no GitHub</a>).</figcaption>
       </figure>
+
+      <div class="prose" id="conclusao" style="margin-top: 56px">
+        <h2>Conclusão</h2>
+        <p>Os resultados confirmam que a escolha da metodologia tem impacto direto sobre as estimativas de desmatamento. Em uma área da dimensão da Amazônia Legal, com mais de 5 milhões de km² e quase 60% do território nacional, essas diferenças tornam-se especialmente visíveis.</p>
+        <p>Como esperado, o PRODES apresenta as estimativas mais conservadoras. Isso decorre de três características já descritas: a área mínima mapeável de 6,25 ha, a exclusão da perda de vegetação causada por incêndios e a desconsideração da floresta secundária. Uma vez que uma área de floresta primária é classificada como desmatada, ela deixa de ser considerada nos anos seguintes, independentemente do que ocorra com ela depois. O PRODES é, portanto, a base mais indicada quando o objetivo é quantificar o corte raso de floresta primária em polígonos a partir de 6,25 ha. Para análises mais abrangentes, o INPE mantém outros programas com dados públicos que podem complementar o PRODES, como o <a href="https://terrabrasilis.dpi.inpe.br/queimadas/portal/" target="_blank" rel="noopener">Programa Queimadas</a>, voltado ao monitoramento de focos de calor e áreas queimadas, e o <a href="https://www.terraclass.gov.br/" target="_blank" rel="noopener">TerraClass</a>, que acompanha o uso da terra e a dinâmica da vegetação secundária em áreas desmatadas.</p>
+        <p>Para uma visão ampla, que incorpore todos os distúrbios na vegetação arbórea com alta resolução espacial (0,09 ha), o Global Forest Watch é uma boa opção. Cabe, porém, uma ressalva importante: como o GFW mede a perda de cobertura arbórea, e não o desmatamento no sentido estrito, a colheita em plantios florestais pode ser contabilizada caso essas áreas não tenham sido previamente excluídas. Esse filtro pode ser aplicado a posteriori, pelo cruzamento com bases geográficas validadas, eliminando falsos positivos, um dos grandes desafios do sensoriamento remoto. Recomendamos, portanto, utilizar os dados do GFW com cautela e, sempre que possível, aplicar esse tipo de filtragem.</p>
+        <p>O MapBiomas destaca-se como uma alternativa bastante interessante. Além de trabalhar com a mesma resolução de 0,09 ha, distingue o desmatamento de vegetação primária e secundária, permitindo ao usuário considerar uma, outra ou ambas. Mais do que o desmatamento em si, o MapBiomas mapeia as transições de uso e cobertura do solo e classifica as áreas desmatadas de acordo com o uso posterior, o que oferece base para análises mais aprofundadas sobre as dinâmicas socioeconômicas por trás da perda de vegetação.</p>
+        <p>Por fim, a forte discrepância observada em 2024, quando o GFW registra uma taxa muito superior à das demais metodologias, deve-se principalmente à perda de cobertura arbórea provocada por incêndios florestais. Na literatura científica, o fogo é tradicionalmente associado à degradação florestal, e não ao desmatamento. Por isso, o PRODES e o MapBiomas simplesmente não incluem essas perdas em suas estimativas de desmatamento. No caso do MapBiomas, vale lembrar que utilizamos neste estudo a série de Uso e Cobertura, que contabiliza apenas a supressão completa da vegetação nativa e não considera as áreas afetadas por incêndios. Mais do que apontar qual base está correta, a comparação mostra que cada metodologia responde a uma pergunta diferente, e que a escolha dos dados deve partir de uma definição clara do objetivo da análise.</p>
+      </div>
+
+      <div class="prose" id="referencias" style="margin-top: 56px">
+        <h2>Referências</h2>
+        <ol style="font-size:15px; padding-left:1.25em">
+          <li>HANSEN, M. C. et al. High-Resolution Global Maps of 21st-Century Forest Cover Change. <em>Science</em>, v. 342, p. 850–853, 2013. DOI: <a href="https://doi.org/10.1126/science.1244693" target="_blank" rel="noopener">10.1126/science.1244693</a>.</li>
+          <li>GLOBAL FOREST WATCH. Explicação dos dados do Global Forest Watch sobre a perda de cobertura arbórea de 2024. Disponível em: <a href="https://www.globalnaturewatch.org/blog/pt/data-and-tools/explicacao-dos-dados-do-global-forest-watch-sobre-a-perda-de-cobertura-arborea-de-2024/" target="_blank" rel="noopener">globalnaturewatch.org</a>.</li>
+          <li>ALMEIDA, C. A. et al. <em>Metodologia utilizada nos sistemas PRODES e DETER</em>. 2. ed. (atualizada). São José dos Campos: INPE, 2022. 47 p.</li>
+          <li>INPE. PRODES: monitoramento anual da supressão de vegetação nativa. Disponível em: <a href="https://data.inpe.br/biomasbr/prodes-monitoramento-anual-da-supressao-de-vegetacao-nativa/" target="_blank" rel="noopener">data.inpe.br</a>.</li>
+          <li>INPE. Programa Queimadas: portal de monitoramento de queimadas e incêndios florestais. Disponível em: <a href="https://terrabrasilis.dpi.inpe.br/queimadas/portal/" target="_blank" rel="noopener">terrabrasilis.dpi.inpe.br/queimadas</a>.</li>
+          <li>INPE; EMBRAPA. TerraClass: mapeamento do uso e cobertura da terra em áreas desflorestadas. Disponível em: <a href="https://www.terraclass.gov.br/" target="_blank" rel="noopener">terraclass.gov.br</a>.</li>
+          <li>PROJETO MAPBIOMAS. Mapeamento Anual de Cobertura e Uso da Terra no Brasil – Coleção 11. Acesso em: 18 nov. 2026. Disponível em: <a href="https://brasil.mapbiomas.org" target="_blank" rel="noopener">brasil.mapbiomas.org</a>.</li>
+        </ol>
+      </div>
     </div>
   </section>
 
