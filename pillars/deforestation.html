@@ -20,10 +20,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="../pictures/favicon-192.png">
 <link rel="icon" type="image/png" sizes="96x96" href="../pictures/favicon-96.png">
 <link rel="apple-touch-icon" href="../pictures/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&text=f&display=swap" rel="stylesheet"><!-- only the letter f, replacing Fraunces' f -->
+<link rel="stylesheet" href="/fonts/fonts.css"><!-- self-hosted: no font requests to Google -->
 <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
@@ -56,6 +53,11 @@
       <h1>Precise forest maps</h1>
       <p class="lead">Whether you need to verify thousands of plots against the EUDR cutoff date or monitor forest health over a whole region, we build mapping routines that precisely distinguish forest from agriculture and agroforestry systems.</p>
       <figure class="banner"><img src="../pictures/forestPlantation.jpg" alt="Aerial image of a forest edge bordering tree plantations, small farm plots and a settlement"></figure>
+      <aside class="tool-callout">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 13h5l-1 9 8-11h-5l1-9z"/></svg>
+        <p><b>Try it yourself.</b> Check your plot geolocations against the EU's 2020 forest map, free and without uploading your files.</p>
+        <a class="btn" href="/forest-check/">Open the free forest check <span aria-hidden="true">→</span></a>
+      </aside>
     </div>
   </div>
 
@@ -81,7 +83,7 @@
       <h2>Services in this pillar.</h2>
       <p class="section-intro">Plot-level verification against deforestation cutoff dates, with automated alerts and audit-ready evidence, built on scalable remote sensing and ML pipelines.</p>
       <div class="offer">
-        <article class="card"><div class="num">03.1</div><h3>Plot verification</h3><p>Checks of farm and plot geolocations against forest baselines and the EUDR cutoff date, with a clear result for each plot.</p></article>
+        <article class="card"><div class="num">03.1</div><h3>Plot verification</h3><p>Checks of farm and plot geolocations against forest baselines and the EUDR cutoff date, with a clear result for each plot.</p><a class="more" href="/forest-check/">Try the free forest check <span aria-hidden="true">→</span></a></article>
         <article class="card"><div class="num">03.2</div><h3>Geolocation quality control</h3><p>Validation of points and polygons: wrong coordinates, overlaps, oversized plots and other common errors.</p></article>
         <article class="card"><div class="num">03.3</div><h3>Forest baselines &amp; change detection</h3><p>Forest maps and change detection using optical and radar satellite data and time-series analysis.</p></article>
         <article class="card"><div class="num">03.4</div><h3>Deep learning classification</h3><p>CNN-based forest and land cover classification for regions where global maps are not accurate enough.</p></article>
@@ -145,7 +147,7 @@
 <footer>
   <div class="wrap">
     <span>© <span id="y">2026</span> GeoAnalytics Lab · Barcelona</span>
-    <span>geoanalyticslab.com</span>
+    <span><a href="/forest-check/">Free EUDR check</a> · <a href="/privacy.html">Privacy</a> · geoanalyticslab.com</span>
   </div>
 </footer>
 

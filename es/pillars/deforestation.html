@@ -20,10 +20,7 @@
 <link rel="icon" type="image/png" sizes="192x192" href="../../pictures/favicon-192.png">
 <link rel="icon" type="image/png" sizes="96x96" href="../../pictures/favicon-96.png">
 <link rel="apple-touch-icon" href="../../pictures/apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&text=f&display=swap" rel="stylesheet"><!-- only the letter f, replacing Fraunces' f -->
+<link rel="stylesheet" href="/fonts/fonts.css"><!-- self-hosted: no font requests to Google -->
 <link rel="stylesheet" href="../../styles.css">
 </head>
 <body>
@@ -56,6 +53,11 @@
       <h1>Mapas forestales precisos</h1>
       <p class="lead">Tanto si necesita verificar miles de parcelas frente a la fecha de corte de la EUDR como monitorear la salud forestal de toda una región, desarrollamos rutinas cartográficas que distinguen con precisión el bosque de la agricultura y de los sistemas agroforestales.</p>
       <figure class="banner"><img src="../../pictures/forestPlantation.jpg" alt="Imagen aérea del borde de un bosque junto a plantaciones forestales, pequeñas parcelas agrícolas y un asentamiento"></figure>
+      <aside class="tool-callout">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 4 13h5l-1 9 8-11h-5l1-9z"/></svg>
+        <p><b>Pruébalo tú mismo.</b> Comprueba la geolocalización de tus parcelas con el mapa de bosques 2020 de la UE, gratis y sin subir tus archivos.</p>
+        <a class="btn" href="/forest-check/">Abrir la verificación gratuita (en inglés) <span aria-hidden="true">→</span></a>
+      </aside>
     </div>
   </div>
 
@@ -81,7 +83,7 @@
       <h2>Servicios de este pilar.</h2>
       <p class="section-intro">Verificación a nivel de parcela frente a las fechas de corte de deforestación, con alertas automatizadas y evidencias listas para auditoría, basada en flujos escalables de teledetección y aprendizaje automático.</p>
       <div class="offer">
-        <article class="card"><div class="num">03.1</div><h3>Verificación de parcelas</h3><p>Comprobación de las geolocalizaciones de fincas y parcelas frente a líneas base forestales y la fecha de corte de la EUDR, con un resultado claro para cada parcela.</p></article>
+        <article class="card"><div class="num">03.1</div><h3>Verificación de parcelas</h3><p>Comprobación de las geolocalizaciones de fincas y parcelas frente a líneas base forestales y la fecha de corte de la EUDR, con un resultado claro para cada parcela.</p><a class="more" href="/forest-check/">Prueba la verificación gratuita (en inglés) <span aria-hidden="true">→</span></a></article>
         <article class="card"><div class="num">03.2</div><h3>Control de calidad de geolocalización</h3><p>Validación de puntos y polígonos: coordenadas erróneas, solapamientos, parcelas sobredimensionadas y otros errores habituales.</p></article>
         <article class="card"><div class="num">03.3</div><h3>Líneas base forestales y detección de cambios</h3><p>Mapas forestales y detección de cambios con datos satelitales ópticos y de radar y análisis de series temporales.</p></article>
         <article class="card"><div class="num">03.4</div><h3>Clasificación con deep learning</h3><p>Clasificación de bosques y cobertura del suelo basada en CNN para regiones donde los mapas globales no son lo bastante precisos.</p></article>
@@ -145,7 +147,7 @@
 <footer>
   <div class="wrap">
     <span>© <span id="y">2026</span> GeoAnalytics Lab · Barcelona</span>
-    <span>geoanalyticslab.com</span>
+    <span><a href="/forest-check/">Verificación EUDR gratuita</a> · <a href="/privacy.html">Privacidad</a> · geoanalyticslab.com</span>
   </div>
 </footer>
 

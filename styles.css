@@ -317,3 +317,19 @@ figcaption.split .credit { right: 8px; bottom: 8px; }
 .refs { margin: 24px 0 0; padding-left: 22px; color: var(--muted); font-size: 15px; }
 .refs li { margin-bottom: 12px; }
 .refs li:target { color: var(--ink); }
+
+/* Link to the free EUDR forest check */
+.promo { display: block; background: var(--brand); color: var(--brand-ink); text-decoration: none; font-size: 15px; }
+.promo .wrap { display: block; padding-top: 14px; padding-bottom: 14px; }
+.promo-tag { display: inline-block; margin-right: 6px; padding: 2px 9px; border-radius: 999px; font-size: 12px; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; background: var(--accent); color: #1c2a24; }
+.promo-cta { font-weight: 600; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.promo:hover .promo-cta span { display: inline-block; transform: translateX(3px); transition: transform .15s ease; }
+.tool-callout { display: grid; grid-template-columns: auto 1fr auto; gap: 16px 20px; align-items: center; margin: 28px 0 0;
+  padding: 20px 24px; border: 1px solid color-mix(in srgb, var(--brand) 35%, var(--line)); border-radius: 16px;
+  background: color-mix(in srgb, var(--brand) 7%, var(--surface)); }
+.tool-callout svg { color: var(--brand); }
+.tool-callout p { margin: 0; color: var(--muted); }
+.tool-callout p b { color: var(--ink); }
+.tool-callout .btn { white-space: nowrap; }
+@media (max-width: 760px) { .tool-callout { grid-template-columns: 1fr; } .tool-callout svg { display: none; } }

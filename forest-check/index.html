@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free EUDR forest check · GeoAnalytics Lab</title>
+<meta name="description" content="Upload your plot geolocations (GeoJSON, Shapefile, GeoPackage or KML) and check them for forest against the JRC Global Forest Cover 2020 map, the EUDR reference year. Free, and your files never leave your computer.">
+<meta property="og:title" content="Free EUDR forest check · GeoAnalytics Lab">
+<meta property="og:description" content="Check your plots for forest in 2020, the EUDR cut-off year, against the JRC Global Forest Cover map. Free, and your files never leave your computer.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geoanalyticslab.com/forest-check/">
+<meta property="og:image" content="https://geoanalyticslab.com/pictures/forestPlantation.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://geoanalyticslab.com/forest-check/">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="../pictures/favicon-192.png">
+<link rel="icon" type="image/png" sizes="96x96" href="../pictures/favicon-96.png">
+<link rel="apple-touch-icon" href="../pictures/apple-touch-icon.png">
+<link rel="stylesheet" href="/fonts/fonts.css"><!-- self-hosted: no font requests to Google -->
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<link rel="stylesheet" href="tool.css">
+</head>
+<body>
+<a class="skip" href="#top">Skip to content</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="GeoAnalytics Lab home">
+      <img src="../pictures/logo.png" width="40" height="40" alt="">
+      <span>GeoAnalytics<b>Lab</b></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <ul id="nav-links">
+      <li><a href="../index.html#services">What we do</a></li>
+      <li><a href="../index.html#work">Work</a></li>
+      <li><a href="../blog/index.html">Blog</a></li>
+      <li><a href="../index.html#partners">Partners</a></li>
+      <li><a href="../index.html#about">About</a></li>
+      <li><a class="btn" href="#contact">Get in touch</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+  <div class="page-hero fc-hero">
+    <div class="wrap">
+      <a class="crumb" href="../pillars/deforestation.html"><span aria-hidden="true">←</span> Forest monitoring &amp; EUDR</a>
+      <p class="eyebrow">Free tool · EUDR screening</p>
+      <h1>Free EUDR forest check</h1>
+      <p class="lead">Upload your plot geolocations and see in seconds which plots contain forest in the
+        JRC Global Forest Cover 2020 map, the EU's reference map for the EUDR cut-off date.
+        <strong>Your files never leave your computer</strong>: the whole analysis runs in your browser.</p>
+      <p class="fc-verdict">No forest in your plots in 2020? Then the EUDR deforestation requirement is likely met.
+        Forest found? <a href="#contact">Contact us</a> for a closer look.</p>
+    </div>
+  </div>
+
+  <section class="fc-section" id="check" aria-label="Forest check tool">
+    <div class="wrap fc-wrap">
+      <div class="fc-layout">
+      <ol class="fc-steps" aria-label="How it works">
+        <li data-step="1"><span class="fc-num" aria-hidden="true">1</span><div><h3>Upload your plots</h3>
+          <p>Polygons or points as GeoJSON, zipped Shapefile, GeoPackage or KML, in any coordinate system. Or try the example plots.</p></div></li>
+        <li data-step="2"><span class="fc-num" aria-hidden="true">2</span><div><h3>Check in your browser</h3>
+          <p>Your browser reads only the parts of the 10 m JRC forest map that overlap your plots and counts the forest pixels in each one.</p></div></li>
+        <li data-step="3"><span class="fc-num" aria-hidden="true">3</span><div><h3>Review &amp; download</h3>
+          <p>See every plot on satellite imagery, click a row to zoom in, and download the results as CSV and GeoJSON.</p></div></li>
+      </ol>
+      <div class="fc-main">
+      <div class="fc-card">
+        <div class="fc-input">
+          <label class="fc-drop" id="drop">
+            <input type="file" id="file" multiple accept=".geojson,.json,.zip,.gpkg,.kml,.kmz">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+            <span><b>Drop your plots here</b> or click to choose a file</span>
+            <small>GeoJSON · Shapefile (.zip with .shp, .dbf, .prj) · GeoPackage (.gpkg) · KML / KMZ · any coordinate system</small>
+          </label>
+          <div class="fc-side">
+            <button type="button" class="btn ghost" id="example">Try with example plots</button>
+            <label class="fc-thr">Flag a plot if forest ≥
+              <input type="number" id="thr" value="0" min="0" step="0.1" inputmode="decimal"> ha</label>
+            <p class="fc-privacy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              Processed locally. Nothing is uploaded.</p>
+          </div>
+        </div>
+
+        <div class="fc-body">
+          <div class="fc-map" id="map" role="region" aria-label="Map of plots and JRC forest 2020"></div>
+          <div class="fc-results">
+            <div class="fc-summary">
+              <div><b id="sTotal">–</b><span>plots</span></div>
+              <div class="is-forest"><b id="sForest">–</b><span>with forest</span></div>
+              <div class="is-clear"><b id="sClear">–</b><span>no forest</span></div>
+              <div><b id="sNa">–</b><span>not checked</span></div>
+            </div>
+            <p class="fc-status" id="log" role="status" aria-live="polite">Load a file, or try the example plots.</p>
+            <div class="fc-issues" id="issues" hidden></div>
+            <div class="fc-table-wrap">
+              <table id="tbl">
+                <thead><tr>
+                  <th scope="col" data-k="id">Plot</th>
+                  <th scope="col" class="n" data-k="totalHa">Area ha</th>
+                  <th scope="col" class="n" data-k="forestHa">Forest ha</th>
+                  <th scope="col" class="n" data-k="forestPct">Forest %</th>
+                  <th scope="col" data-k="status">Result</th>
+                </tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="fc-downloads">
+              <button type="button" class="btn" id="dl" disabled>Download results</button>
+              <span class="fc-dl-note">CSV + GeoJSON in one ZIP · free registration</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="fc-legend"><span class="sw forest"></span>Plot with forest <span class="sw clear"></span>No forest
+        <span class="sw jrc"></span>JRC forest 2020</p>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="prose">
+        <p class="eyebrow">Good to know</p>
+        <h2>A first screening, not a verdict.</h2>
+        <p><strong>What is checked.</strong> Forest presence in 2020 in the JRC Global Forest Cover 2020 map, version 4 (10 m resolution).
+          A map pixel counts when its centre lies inside the plot. Points are checked at their exact location.</p>
+        <p><strong>What it means.</strong> Forest in a plot in 2020 does not by itself mean non-compliance, and no forest in the map
+          does not prove compliance. The JRC map is not legally binding and has known errors, for example with agroforestry,
+          plantations and tree crops. Plots flagged here deserve a closer look with higher-resolution imagery and time series.</p>
+        <p><strong>Coverage.</strong> The tool covers the regions EUDR commodities mainly come from. Not included: everything north
+          of 60° N (northern Canada, Alaska, Greenland, northern Scandinavia and Russia), and Europe and Asia between 50° and 60° N.
+          Plots there are marked "Outside coverage".</p>
+        <p><strong>Privacy.</strong> Your files are read and analysed by your own browser. Only small pieces of the public forest map are
+          downloaded; your plot geometries are not sent anywhere.</p>
+        <p class="fc-cite">Forest map: European Commission, Joint Research Centre (JRC), Global Forest Cover 2020 (GFC2020), version 4,
+          <a href="https://forest-observatory.ec.europa.eu/" target="_blank" rel="noopener">EU Observatory on deforestation and forest degradation</a>.
+          Satellite imagery: Mapbox, Maxar; Sentinel-2 cloudless 2016 by EOX (Copernicus Sentinel data).</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <h2>Plots flagged? Let's take a closer look.</h2>
+        <p>We verify flagged plots with high-resolution imagery and time series, separate forest from agroforestry and plantations,
+          and deliver audit-ready evidence for your EUDR due diligence.</p>
+        <div class="ctas">
+          <a class="btn" href="mailto:contact@geoanalyticslab.com?subject=EUDR%20forest%20check">contact@geoanalyticslab.com</a>
+          <a class="btn ghost" href="https://wa.me/34604816443" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn ghost" href="../pillars/deforestation.html">Our EUDR services</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dialog class="fc-dialog" id="reg" aria-labelledby="reg-title">
+  <form id="reg-form" method="dialog" novalidate>
+    <button type="button" class="fc-close" id="reg-close" aria-label="Close">×</button>
+    <p class="eyebrow">Free download</p>
+    <h2 id="reg-title">Get your results</h2>
+    <p class="fc-dialog-intro">Register once to download the CSV and GeoJSON files with the result for every plot.</p>
+    <label class="fc-field">Name<input type="text" id="reg-name" name="name" autocomplete="name" required maxlength="100"></label>
+    <label class="fc-field">Organization<input type="text" id="reg-org" name="org" autocomplete="organization" required maxlength="150"></label>
+    <label class="fc-field">Work email<input type="email" id="reg-email" name="email" autocomplete="email" required maxlength="254"></label>
+    <label class="fc-hp" aria-hidden="true">Website<input type="text" id="reg-website" name="website" tabindex="-1" autocomplete="off"></label>
+    <label class="fc-check"><input type="checkbox" id="reg-consent" required>
+      <span>I agree that GeoAnalytics Lab receives my name, organization and email, together with a summary of my results:
+        only the share of plots with and without forest. My plot locations and files are not shared.</span></label>
+    <label class="fc-check"><input type="checkbox" id="reg-marketing">
+      <span>Send me occasional updates from GeoAnalytics Lab (optional).</span></label>
+    <div id="reg-captcha" class="fc-captcha"></div>
+    <p class="fc-error" id="reg-error" role="alert"></p>
+    <button type="submit" class="btn" id="reg-submit">Register &amp; download</button>
+    <p class="fc-fineprint">GeoAnalytics Lab (Barcelona) uses these details only to follow up on your request
+      and, if you tick the box, to send you updates. We never sell them. Ask us to delete them at any time:
+      <a href="mailto:contact@geoanalyticslab.com">contact@geoanalyticslab.com</a>.
+      <a href="../privacy.html" target="_blank" rel="noopener">Privacy policy</a></p>
+  </form>
+</dialog>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y">2026</span> GeoAnalytics Lab · Barcelona</span>
+    <span><a href="/privacy.html">Privacy</a> · geoanalyticslab.com</span>
+  </div>
+</footer>
+
+<script src="../site.js"></script>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script type="module" src="app.js"></script>
+</body>
+</html>
