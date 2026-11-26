@@ -20,7 +20,7 @@ const ERR = {
   json: 'This GeoJSON file cannot be read: it looks damaged or incomplete (it is not valid JSON). Please export it again from your GIS.',
   notGeojson: 'This JSON file does not contain GeoJSON features. Please export your plots as GeoJSON (EPSG:4326).',
   zip: 'This ZIP file cannot be opened: it looks damaged or incomplete. Please create the ZIP again.',
-  zipEmpty: 'The ZIP contains no shapefile (.shp) or KML file. A shapefile needs at least the .shp, .shx and .dbf files, ideally also the .prj.',
+  zipEmpty: 'The ZIP contains no supported file. It can hold a shapefile (.shp with .shx and .dbf, ideally .prj), a GeoPackage (.gpkg), GeoJSON or KML.',
   shpParts: (missing) => `The shapefile in the ZIP is incomplete: the ${missing} file is missing. Please add it to the ZIP (a shapefile needs .shp, .shx and .dbf, ideally .prj).`,
   shp: 'The shapefile cannot be read: it looks damaged. Please export it again from your GIS.',
   gpkg: 'This GeoPackage cannot be read: it looks damaged, incomplete or is not a GeoPackage. Please export it again from your GIS.',
@@ -41,9 +41,15 @@ export async function readFile(file) {
       const names = [];
       try { unzipSync(new Uint8Array(buf), { filter: (f) => { names.push(f.name); return false; } }); }   // list only
       catch { throw new UserError(ERR.zip); }
-      const has = (ext) => names.some((n) => n.toLowerCase().endsWith(ext) && !/(^|\/)__MACOSX\//.test(n));
-      if (!has('.shp') && has('.kml')) return await readKmz(buf);
-      if (!has('.shp')) throw new UserError(ERR.zipEmpty);
+      const real = names.filter((n) => !/(^|\/)(__MACOSX\/|\._)/.test(n) && !n.endsWith('/'));   // skip macOS extras and folders
+      const pick = (ext) => real.filter((n) => n.toLowerCase().endsWith(ext));
+      const has = (ext) => pick(ext).length > 0;
+      if (!has('.shp')) {                               // not a shapefile: a zipped GeoPackage, GeoJSON or KML
+        if (has('.gpkg')) return await readZipped(buf, pick('.gpkg'), readGeoPackage);
+        if (has('.geojson') || has('.json')) return await readZipped(buf, [...pick('.geojson'), ...pick('.json')], readGeoJSON);
+        if (has('.kml')) return await readKmz(buf);
+        throw new UserError(ERR.zipEmpty);
+      }
       const missing = ['.shx', '.dbf'].filter((e) => !has(e));
       if (missing.length) throw new UserError(ERR.shpParts(missing.join(' and ')));
       const out = await readShapefileZip(buf);
@@ -61,6 +67,19 @@ export async function readFile(file) {
     throw new UserError(kind);
   }
   throw new UserError(ERR.type(file.name));
+}
+
+// Read files of one type packed in a ZIP and merge them
+async function readZipped(buf, names, reader) {
+  const { unzipSync } = await import(FFLATE);
+  const files = unzipSync(new Uint8Array(buf), { filter: (f) => names.includes(f.name) });
+  const out = { features: [], warnings: [], layers: [] };
+  for (const n of names) {
+    const r = await reader(files[n]);
+    out.features.push(...r.features); out.warnings.push(...r.warnings); out.layers.push(...r.layers.map((l) => `${n}: ${l}`));
+  }
+  if (names.length > 1) out.warnings.push(`The ZIP holds ${names.length} files; all were analysed.`);
+  return out;
 }
 
 // ---------- GeoJSON ----------
