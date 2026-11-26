@@ -1,0 +1,67 @@
+name: IndexNow
+
+# After each push to main, wait for GitHub Pages to publish that commit, then tell
+# IndexNow (Bing and others) which pages changed. Run it by hand to submit every page.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  deployments: read
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: List changed pages
+        id: pages
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "mode=all" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          before="${{ github.event.before }}"
+          if ! git cat-file -e "$before^{commit}" 2>/dev/null; then before="HEAD~1"; fi
+          sitemap=$(grep -o '<loc>[^<]*</loc>' sitemap.xml | sed 's/<[^>]*>//g')
+          urls=""
+          for f in $(git diff --name-only --diff-filter=AM "$before" HEAD -- '*.html'); do
+            p="/${f%index.html}"
+            u="https://geoanalyticslab.com$p"
+            # only pages listed in the sitemap (the indexable ones)
+            if grep -qxF "$u" <<< "$sitemap"; then urls="$urls $u"; fi
+          done
+          echo "mode=list" >> "$GITHUB_OUTPUT"
+          echo "urls=$urls" >> "$GITHUB_OUTPUT"
+          echo "Changed pages:${urls:- none}"
+
+      - name: Wait for GitHub Pages to publish this commit
+        if: steps.pages.outputs.mode == 'all' || steps.pages.outputs.urls != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          repo="${{ github.repository }}"; sha="${{ github.sha }}"
+          for i in $(seq 1 40); do
+            id=$(gh api "repos/$repo/deployments?environment=github-pages&sha=$sha&per_page=1" --jq '.[0].id // empty')
+            state=$([ -n "$id" ] && gh api "repos/$repo/deployments/$id/statuses" --jq '.[0].state // "pending"' || echo "not started")
+            echo "Pages deployment of ${sha:0:7}: $state"
+            case "$state" in
+              success) sleep 60; exit 0 ;;   # give the CDN a moment
+              failure|error) exit 1 ;;
+            esac
+            sleep 20
+          done
+          echo "Pages did not publish in time"; exit 1
+
+      - name: Submit to IndexNow
+        if: steps.pages.outputs.mode == 'all' || steps.pages.outputs.urls != ''
+        run: |
+          if [ "${{ steps.pages.outputs.mode }}" = "all" ]; then
+            bash .github/scripts/indexnow.sh
+          else
+            bash .github/scripts/indexnow.sh ${{ steps.pages.outputs.urls }}
+          fi
