@@ -1,11 +1,13 @@
 // Read user uploads (GeoJSON, zipped Shapefile, GeoPackage, KML/KMZ) into GeoJSON
 // features in EPSG:4326. Libraries are loaded on demand from CDNs.
 
+import { t, num } from './i18n.js';
+
 const loaded = {};
 function loadScript(src) {
   return loaded[src] ??= new Promise((ok, fail) => {
     const s = document.createElement('script');
-    s.src = src; s.onload = ok; s.onerror = () => fail(new UserError('A component of the tool could not be loaded. Please check your internet connection (or ad blocker) and try again.'));
+    s.src = src; s.onload = ok; s.onerror = () => fail(new UserError(t('e_cdn')));
     document.head.appendChild(s);
   });
 }
@@ -17,23 +19,16 @@ const FFLATE = 'https://cdn.jsdelivr.net/npm/fflate@0.8.2/+esm';
 // Errors shown to the user: plain language, with what to do next.
 export class UserError extends Error {}
 const ERR = {
-  json: 'This GeoJSON file cannot be read: it looks damaged or incomplete (it is not valid JSON). Please export it again from your GIS.',
-  notGeojson: 'This JSON file does not contain GeoJSON features. Please export your plots as GeoJSON (EPSG:4326).',
-  zip: 'This ZIP file cannot be opened: it looks damaged or incomplete. Please create the ZIP again.',
-  zipEmpty: 'The ZIP contains no supported file. It can hold a shapefile (.shp with .shx and .dbf, ideally .prj), a GeoPackage (.gpkg), GeoJSON or KML.',
-  shpParts: (missing) => `The shapefile in the ZIP is incomplete: the ${missing} file is missing. Please add it to the ZIP (a shapefile needs .shp, .shx and .dbf, ideally .prj).`,
-  shp: 'The shapefile cannot be read: it looks damaged. Please export it again from your GIS.',
-  gpkg: 'This GeoPackage cannot be read: it looks damaged, incomplete or is not a GeoPackage. Please export it again from your GIS.',
-  gpkgNoLayers: 'This GeoPackage contains no layers with geometries.',
-  kml: 'This KML file cannot be read: it looks damaged or incomplete (invalid XML). Please export it again (e.g. from Google Earth: Save Place As… KML).',
-  crs: (what) => `The coordinate system of ${what} is not supported here. Please export the file in WGS84 (EPSG:4326) and try again.`,
-  type: (name) => `“${name}” is not a supported file. Please use GeoJSON (.geojson/.json), a zipped Shapefile (.zip), GeoPackage (.gpkg) or KML (.kml/.kmz).`,
+  get json() { return t('e_json'); }, get notGeojson() { return t('e_notGeojson'); }, get zip() { return t('e_zip'); },
+  get zipEmpty() { return t('e_zipEmpty'); }, shpParts: (missing) => t('e_shpParts', { missing }), get shp() { return t('e_shp'); },
+  get gpkg() { return t('e_gpkg'); }, get gpkgNoLayers() { return t('e_gpkgNoLayers'); }, get kml() { return t('e_kml'); },
+  crs: (what) => t('e_crs', { what }), type: (name) => t('e_type', { name }),
 };
 
 export async function readFile(file) {
   const name = file.name.toLowerCase();
   const buf = await file.arrayBuffer();
-  if (!buf.byteLength) throw new UserError(`“${file.name}” is empty (0 bytes).`);
+  if (!buf.byteLength) throw new UserError(t('e_empty', { name: file.name }));
   try {
     if (name.endsWith('.zip')) {
       // a .zip is normally a shapefile, but people also zip KML files
@@ -53,7 +48,7 @@ export async function readFile(file) {
       const missing = ['.shx', '.dbf'].filter((e) => !has(e));
       if (missing.length) throw new UserError(ERR.shpParts(missing.join(' and ')));
       const out = await readShapefileZip(buf);
-      if (!has('.prj')) out.warnings.push('The ZIP has no .prj file, so the coordinates were assumed to be longitude/latitude (WGS84).');
+      if (!has('.prj')) out.warnings.push(t('w_noprj'));
       return out;
     }
     if (name.endsWith('.gpkg')) return await readGeoPackage(buf);
@@ -78,7 +73,7 @@ async function readZipped(buf, names, reader) {
     const r = await reader(files[n]);
     out.features.push(...r.features); out.warnings.push(...r.warnings); out.layers.push(...r.layers.map((l) => `${n}: ${l}`));
   }
-  if (names.length > 1) out.warnings.push(`The ZIP holds ${names.length} files; all were analysed.`);
+  if (names.length > 1) out.warnings.push(t('w_zipfiles', { n: names.length }));
   return out;
 }
 
@@ -95,7 +90,7 @@ async function readGeoJSON(buf) {
   const warnings = [];
   if (code && code !== '4326') {
     await loadScript(PROJ4);
-    if (!proj4.defs('EPSG:' + code)) throw new UserError(ERR.crs(`this GeoJSON (EPSG:${code})`));
+    if (!proj4.defs('EPSG:' + code)) throw new UserError(ERR.crs(t('what_geojson', { code })));
     reprojectFeatures(feats, 'EPSG:' + code);
   }
   return { features: feats, warnings, layers: ['(geojson)'] };
@@ -118,7 +113,7 @@ async function readKmz(buf) {
   let files;
   try { files = unzipSync(new Uint8Array(buf), { filter: (f) => /\.kml$/i.test(f.name) }); } catch { throw new UserError(ERR.zip); }
   const names = Object.keys(files).sort((a, b) => (/(^|\/)doc\.kml$/i.test(b) ? 1 : 0) - (/(^|\/)doc\.kml$/i.test(a) ? 1 : 0));
-  if (!names.length) throw new UserError('No .kml file was found inside the KMZ.');
+  if (!names.length) throw new UserError(t('e_kmzNoKml'));
   const out = { features: [], warnings: [], layers: [] };
   for (const n of names) {
     const r = readKml(new TextDecoder().decode(files[n]));
@@ -171,7 +166,7 @@ function readKml(text) {
     const gEl = [...pm.children].find((c) => GEOM_TAGS.includes(c.localName));
     features.push({ type: 'Feature', properties: props, geometry: gEl ? geometry(gEl) : null });
   }
-  const warnings = features.length ? [] : ['No placemarks found in the KML file.'];
+  const warnings = features.length ? [] : [t('w_noplacemarks')];
   return { features, warnings, layers: ['(kml)'] };
 }
 
@@ -207,14 +202,14 @@ async function readGeoPackage(buf) {
       if (!is4326) {
         await loadScript(PROJ4);
         const from = String(org).toUpperCase() === 'EPSG' && proj4.defs('EPSG:' + orgId) ? 'EPSG:' + orgId : def;
-        if (!from || from === 'undefined') throw new UserError(ERR.crs(`layer “${table}”`));
-        try { reprojectFeatures(layerFeats, from); } catch { throw new UserError(ERR.crs(`layer “${table}”`)); }
-        warnings.push(`Layer "${table}" reprojected from ${org}:${orgId} to WGS84.`);
+        if (!from || from === 'undefined') throw new UserError(ERR.crs(t('what_layer', { name: table })));
+        try { reprojectFeatures(layerFeats, from); } catch { throw new UserError(ERR.crs(t('what_layer', { name: table }))); }
+        warnings.push(t('w_reprojected', { layer: table, from: `${org}:${orgId}` }));
       }
       features.push(...layerFeats);
     }
   } finally { db.close(); }
-  if (layers.length > 1) warnings.push(`GeoPackage has ${layers.length} layers; all were analysed.`);
+  if (layers.length > 1) warnings.push(t('w_layers', { n: layers.length }));
   return { features, warnings, layers };
 }
 
@@ -320,8 +315,8 @@ export function toPlots(features) {
     const idKey = ID_KEYS.find((k) => props[k] != null && props[k] !== '');
     const id = idKey ? String(props[idKey]) : `#${idx + 1}`;
     let g = f?.geometry;
-    if (!g) { skipped.push({ id, reason: 'no geometry' }); return; }
-    if (g.type === 'Invalid') { skipped.push({ id, reason: 'damaged geometry' }); return; }
+    if (!g) { skipped.push({ id, reason: t('r_nogeom') }); return; }
+    if (g.type === 'Invalid') { skipped.push({ id, reason: t('r_damaged') }); return; }
     if (g.type === 'GeometryCollection') {            // e.g. KML MultiGeometry: use its polygons, else its points
       const flat = (x) => x.type === 'GeometryCollection' ? x.geometries.flatMap(flat) : [x];
       const parts = flat(g);
@@ -333,7 +328,7 @@ export function toPlots(features) {
     const polys = g.type === 'Polygon' ? [g.coordinates] : g.type === 'MultiPolygon' ? g.coordinates : null;
     if (polys) {
       const notes = [], parts = [], rings = [];
-      let areaHa = 0, approx = false, coords = 0, bad = 0;
+      let areaHa = 0, approx = false, holeOutside = false, coords = 0, bad = 0;
       for (const poly of polys || []) {
         const outer = cleanRing(poly?.[0]);
         if (outer.length < 3) continue;
@@ -343,16 +338,16 @@ export function toPlots(features) {
         for (const h of (poly || []).slice(1)) {
           const hole = cleanRing(h);
           if (hole.length < 3) continue;
-          if (!inside(hole[0], outer)) { notes.push('a hole outside the plot was ignored'); continue; }
+          if (!inside(hole[0], outer)) { notes.push(t('n_holeoutside')); holeOutside = true; continue; }
           ringsHere.push(hole); a -= ringAreaHa(hole);
         }
         parts.push(ringsHere.length); rings.push(...ringsHere); areaHa += Math.max(a, 0);
       }
-      if (!rings.length) { skipped.push({ id, reason: 'invalid polygon (fewer than 3 distinct points)' }); return; }
+      if (!rings.length) { skipped.push({ id, reason: t('r_invalidpoly') }); return; }
       checked++; if (bad > coords / 2) outOfRange++;
-      if (approx) notes.push('self-intersecting shape: result approximate');
+      if (approx) notes.push(t('n_selfint'));
       if (areaHa > MAX_PLOT_HA) {
-        skipped.push({ id, reason: `too large for plot screening (about ${Math.round(areaHa).toLocaleString('en')} ha, limit ${MAX_PLOT_HA.toLocaleString('en')} ha)`,
+        skipped.push({ id, reason: t('r_toolarge', { ha: num(Math.round(areaHa)), max: num(MAX_PLOT_HA) }),
                        code: 'tooLarge', feature: f });
         return;
       }
@@ -361,18 +356,18 @@ export function toPlots(features) {
         ring.forEach(([x, y], k) => { t[2 * k] = x; t[2 * k + 1] = y; });
         return t;
       });
-      plots.push({ id, kind: 'polygon', rings: typed, parts, approxHa: areaHa, approx, notes, feature: f });
+      plots.push({ id, kind: 'polygon', rings: typed, parts, approxHa: areaHa, approx, holeOutside, notes, feature: f });
       return;
     }
     let pt = g.type === 'Point' ? g.coordinates : g.type === 'MultiPoint' ? g.coordinates?.[0] : null;
     if (pt) {
-      if (!okCoord(pt)) { skipped.push({ id, reason: 'invalid coordinates' }); return; }
+      if (!okCoord(pt)) { skipped.push({ id, reason: t('r_invalidcoords') }); return; }
       checked++; if (!inRange(pt)) outOfRange++;
-      const notes = g.type === 'MultiPoint' && g.coordinates.length > 1 ? ['several points: only the first was checked'] : [];
-      plots.push({ id, kind: 'point', lon: pt[0], lat: pt[1], notes, feature: f });
+      const multi = g.type === 'MultiPoint' && g.coordinates.length > 1;
+      plots.push({ id, kind: 'point', lon: pt[0], lat: pt[1], notes: multi ? [t('n_multi')] : [], multi, feature: f });
       return;
     }
-    skipped.push({ id, reason: `unsupported geometry (${g.type}); use polygons or points` });
+    skipped.push({ id, reason: t('r_unsupported', { type: g.type }) });
   });
   return { plots, skipped, outOfRange, checked };
 }

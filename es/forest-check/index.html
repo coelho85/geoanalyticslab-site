@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Herramienta EUDR gratuita: verifica deforestación | GeoAnalytics Lab</title>
+<meta name="description" content="Herramienta EUDR gratuita: comprueba si tus parcelas tenían bosque en 2020 con el mapa del JRC. GeoJSON, Shapefile, GeoPackage, KML. Sin registro.">
+<meta property="og:title" content="Herramienta EUDR gratuita: comprueba la deforestación en tus parcelas">
+<meta property="og:description" content="Comprueba si tus parcelas tenían bosque en 2020, la fecha de corte de la EUDR, con el mapa oficial de bosques del JRC de la UE. Gratis, sin registro, tus archivos no salen de tu ordenador.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://geoanalyticslab.com/es/forest-check/">
+<meta property="og:image" content="https://geoanalyticslab.com/pictures/og-forest-check.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="La verificación EUDR gratuita mostrando parcelas en un mapa satelital con resultados de bosque">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://geoanalyticslab.com/es/forest-check/">
+<link rel="alternate" hreflang="en" href="https://geoanalyticslab.com/forest-check/">
+<link rel="alternate" hreflang="pt" href="https://geoanalyticslab.com/pt/forest-check/">
+<link rel="alternate" hreflang="es" href="https://geoanalyticslab.com/es/forest-check/">
+<link rel="alternate" hreflang="x-default" href="https://geoanalyticslab.com/forest-check/">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="192x192" href="/pictures/favicon-192.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/pictures/favicon-96.png">
+<link rel="apple-touch-icon" href="/pictures/apple-touch-icon.png">
+<link rel="stylesheet" href="/fonts/fonts.css"><!-- self-hosted: no font requests to Google -->
+<link rel="stylesheet" href="/styles.css">
+<link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
+<link rel="stylesheet" href="/forest-check/tool.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Verificación EUDR gratuita", "alternateName": "Herramienta EUDR gratuita", "url": "https://geoanalyticslab.com/es/forest-check/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any (web browser)", "browserRequirements": "A modern web browser", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "description": "Herramienta EUDR gratuita: comprueba si tus parcelas tenían bosque en 2020 con el mapa del JRC. GeoJSON, Shapefile, GeoPackage, KML. Sin registro.", "featureList": ["Comprueba si las parcelas tenían bosque en 2020 (fecha de corte de la EUDR)", "Mapa JRC Global Forest Cover 2020 v4, 10 m", "GeoJSON, Shapefile, GeoPackage, KML/KMZ, cualquier sistema de coordenadas", "Polígonos y puntos", "Tus archivos no salen de tu ordenador", "Resultados en CSV y GeoJSON"], "screenshot": "https://geoanalyticslab.com/pictures/og-forest-check.jpg", "provider": {"@type": "Organization", "name": "GeoAnalytics Lab", "url": "https://geoanalyticslab.com/"}, "inLanguage": "es"}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "GeoAnalytics Lab", "item": "https://geoanalyticslab.com/es/"}, {"@type": "ListItem", "position": 2, "name": "Monitoreo forestal y EUDR", "item": "https://geoanalyticslab.com/es/pillars/deforestation.html"}, {"@type": "ListItem", "position": 3, "name": "Verificación EUDR gratuita", "item": "https://geoanalyticslab.com/es/forest-check/"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "¿Cuál es la fecha de corte de la EUDR?", "acceptedAnswer": {"@type": "Answer", "text": "El Reglamento de la UE sobre deforestación (Reglamento (UE) 2023/1115) exige que el ganado bovino, el cacao, el café, la palma aceitera, el caucho, la soja y la madera, así como los productos derivados, que se comercialicen en la UE estén libres de deforestación: producidos en tierras que no hayan sido deforestadas después del 31 de diciembre de 2020."}}, {"@type": "Question", "name": "¿Qué tengo que hacer para cumplir con la EUDR?", "acceptedAnswer": {"@type": "Answer", "text": "Según el artículo 9, debes reunir información sobre cada producto: la materia prima y la cantidad, el proveedor, el país de producción, la geolocalización de todas las parcelas y pruebas de que está libre de deforestación (como esta verificación) y de que se produjo legalmente. Salvo que todos tus productos procedan de países clasificados como de riesgo bajo, donde se aplica un procedimiento simplificado (artículo 13), también debes evaluar el riesgo (artículo 10) y, si no es insignificante, reducirlo (artículo 11). Por último, presentas una declaración de diligencia debida (DDS) en el Sistema de Información de la UE, en la plataforma TRACES, antes de comercializar los productos en la UE o exportarlos."}}, {"@type": "Question", "name": "¿Qué comprueba esta herramienta EUDR gratuita?", "acceptedAnswer": {"@type": "Answer", "text": "Para cada parcela indica si había bosque en 2020 según el mapa JRC Global Forest Cover 2020 (versión 4, resolución de 10 m), el mapa de bosques publicado por la Comisión Europea para apoyar la EUDR, junto con la superficie de bosque en hectáreas y su porcentaje en la parcela."}}, {"@type": "Question", "name": "¿Qué formatos de archivo puedo subir?", "acceptedAnswer": {"@type": "Answer", "text": "GeoJSON, shapefiles comprimidos, GeoPackage y KML o KMZ (por ejemplo de Google Earth), también dentro de un archivo ZIP. Funciona cualquier sistema de coordenadas, siempre que el archivo indique cuál usa. Las parcelas pueden ser polígonos o puntos: según la EUDR, un solo punto basta para parcelas de menos de 4 hectáreas."}}, {"@type": "Question", "name": "¿Se suben mis archivos a algún sitio?", "acceptedAnswer": {"@type": "Answer", "text": "No. Tu propio navegador lee y analiza los archivos. La ubicación de tus parcelas no se envía ni a nosotros ni a nadie."}}, {"@type": "Question", "name": "¿Es jurídicamente vinculante el mapa de bosques del JRC?", "acceptedAnswer": {"@type": "Answer", "text": "No. El mapa es una ayuda para la evaluación de riesgos, no una referencia jurídica, y tiene errores conocidos, por ejemplo con sistemas agroforestales. Que una parcela tuviera bosque en 2020 no significa por sí solo un incumplimiento, y la ausencia de bosque en el mapa no demuestra el cumplimiento."}}, {"@type": "Question", "name": "¿Qué hago si se encuentra bosque en mis parcelas?", "acceptedAnswer": {"@type": "Answer", "text": "Revisa con más detalle antes de sacar conclusiones. Verificamos las parcelas señaladas con imágenes satelitales de alta resolución y series temporales, distinguimos el bosque de los sistemas agroforestales y las plantaciones, y documentamos la evidencia para tu diligencia debida."}}, {"@type": "Question", "name": "¿Es gratis y cuántas parcelas puedo comprobar?", "acceptedAnswer": {"@type": "Answer", "text": "La comprobación es gratuita y no requiere cuenta; solo se pide un registro gratuito para descargar los resultados. Puedes comprobar miles de parcelas a la vez, siempre que cada una tenga menos de 100 000 ha."}}, {"@type": "Question", "name": "¿Qué regiones están cubiertas?", "acceptedAnswer": {"@type": "Answer", "text": "Los trópicos y subtrópicos, de donde proceden principalmente las materias primas de la EUDR. No se incluyen: todo lo que está al norte de 60° N (norte de Canadá, Alaska, Groenlandia, norte de Escandinavia y Rusia) ni Europa y Asia entre 50° y 60° N. Las parcelas allí se marcan como «Fuera de cobertura»."}}]}</script>
+</head>
+<body>
+<a class="skip" href="#top">Saltar al contenido</a>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="../index.html" aria-label="GeoAnalytics Lab – inicio">
+      <img src="../../pictures/logo.png" width="40" height="40" alt="">
+      <span>GeoAnalytics<b>Lab</b></span>
+    </a>
+    <button class="menu-toggle" type="button" aria-label="Menú" aria-expanded="false" aria-controls="nav-links"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <ul id="nav-links">
+      <li><a href="../index.html#services">Qué hacemos</a></li>
+      <li><a href="../index.html#work">Proyectos</a></li>
+      <li><a href="../blog/index.html">Blog</a></li>
+      <li><a href="../index.html#partners">Socios</a></li>
+      <li><a href="../index.html#about">Nosotros</a></li>
+      <li class="gh"><a href="https://github.com/coelho85" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a></li>
+      <li class="lang" aria-label="Idioma"><a href="/forest-check/" hreflang="en" lang="en" aria-label="English">EN</a><a href="/pt/forest-check/" hreflang="pt" lang="pt-BR" aria-label="Português">PT</a><a href="/es/forest-check/" hreflang="es" lang="es" aria-label="Español" aria-current="page">ES</a></li>
+      <li><a class="btn" href="#contact">Contacto</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="top">
+  <div class="page-hero fc-hero">
+    <div class="wrap">
+      <a class="crumb" href="../pillars/deforestation.html"><span aria-hidden="true">←</span> Monitoreo forestal y EUDR</a>
+      <p class="eyebrow">Herramienta gratuita · Revisión EUDR</p>
+      <h1>Verificación EUDR de deforestación gratuita</h1>
+      <p class="lead">Sube la geolocalización de tus parcelas y descubre en segundos cuáles tienen bosque en el
+        mapa JRC Global Forest Cover 2020, el mapa de referencia de la UE para la fecha de corte de la EUDR.
+        <strong>Tus archivos no salen de tu ordenador</strong>: todo el análisis se hace en tu navegador.</p>
+      <ul class="fc-usps" aria-label="Por qué usar esta herramienta">
+        <li>Gratis, sin registro para comprobar</li><li>Tus archivos no salen de tu ordenador</li><li>Mapa oficial de bosques de la UE (JRC)</li>
+        <li>GeoJSON · Shapefile · GeoPackage · KML</li><li>Polígonos y puntos</li>
+      </ul>
+      <p class="fc-verdict">¿Sin bosque en tus parcelas en 2020? Entonces es probable que se cumpla el requisito de deforestación de la EUDR.
+        ¿Se encontró bosque? <a href="#contact">Contáctanos</a> para una revisión más detallada.</p>
+    </div>
+  </div>
+
+  <section class="fc-section" id="check" aria-label="Herramienta de verificación forestal">
+    <div class="wrap fc-wrap">
+      <div class="fc-layout">
+      <ol class="fc-steps" aria-label="Cómo funciona">
+        <li data-step="1"><span class="fc-num" aria-hidden="true">1</span><div><h3>Sube tus parcelas</h3>
+          <p>Polígonos o puntos en GeoJSON, shapefile comprimido, GeoPackage o KML, en cualquier sistema de coordenadas. O prueba las parcelas de ejemplo.</p></div></li>
+        <li data-step="2"><span class="fc-num" aria-hidden="true">2</span><div><h3>Comprobación en tu navegador</h3>
+          <p>Tu navegador lee las partes del mapa de bosques del JRC (10 m) que coinciden con tus parcelas y cuenta los píxeles de bosque en cada una.</p></div></li>
+        <li data-step="3"><span class="fc-num" aria-hidden="true">3</span><div><h3>Revisa y descarga</h3>
+          <p>Mira cada parcela sobre imágenes satelitales, haz clic en una fila para acercarte y descarga los resultados en CSV y GeoJSON, el formato que exige la EUDR.</p></div></li>
+      </ol>
+      <div class="fc-main">
+      <div class="fc-card">
+        <div class="fc-input">
+          <label class="fc-drop" id="drop">
+            <input type="file" id="file" multiple accept=".geojson,.json,.zip,.gpkg,.kml,.kmz">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/></svg>
+            <span><b>Arrastra aquí tus parcelas</b> o haz clic para elegir un archivo</span>
+            <small>GeoJSON · Shapefile (.zip con .shp, .dbf, .prj) · GeoPackage (.gpkg) · KML / KMZ · también comprimidos en ZIP · cualquier sistema de coordenadas</small>
+          </label>
+          <div class="fc-side">
+            <button type="button" class="btn ghost" id="example">Probar con parcelas de ejemplo</button>
+            <label class="fc-thr">Marcar parcela si el bosque ≥
+              <input type="number" id="thr" value="0" min="0" step="0.1" inputmode="decimal"> ha</label>
+            <p class="fc-privacy"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+              Procesado en tu equipo. No se sube nada.</p>
+          </div>
+        </div>
+
+        <div class="fc-body">
+          <div class="fc-map" id="map" role="region" aria-label="Mapa de parcelas y bosque JRC 2020"></div>
+          <div class="fc-results">
+            <div class="fc-summary">
+              <div><b id="sTotal">–</b><span>parcelas</span></div>
+              <div class="is-forest"><b id="sForest">–</b><span>con bosque</span></div>
+              <div class="is-clear"><b id="sClear">–</b><span>sin bosque</span></div>
+              <div><b id="sNa">–</b><span>no comprobadas</span></div>
+            </div>
+            <p class="fc-status" id="log" role="status" aria-live="polite">Carga un archivo o prueba las parcelas de ejemplo.</p>
+            <div class="fc-issues" id="issues" hidden></div>
+            <div class="fc-table-wrap">
+              <table id="tbl">
+                <thead><tr>
+                  <th scope="col" data-k="id">Parcela</th>
+                  <th scope="col" class="n" data-k="totalHa">Superficie ha</th>
+                  <th scope="col" class="n" data-k="forestHa">Bosque ha</th>
+                  <th scope="col" class="n" data-k="forestPct">Bosque %</th>
+                  <th scope="col" data-k="status">Resultado</th>
+                </tr></thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="fc-downloads">
+              <button type="button" class="btn" id="dl" disabled>Descargar resultados</button>
+              <span class="fc-dl-note">CSV + GeoJSON en un ZIP · registro gratuito</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="fc-legend"><span class="sw forest"></span>Parcela con bosque <span class="sw clear"></span>Sin bosque
+        <span class="sw jrc"></span>Bosque JRC 2020</p>
+      </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="prose">
+        <p class="eyebrow">Preguntas frecuentes</p>
+        <h2>Sobre la verificación EUDR gratuita.</h2>
+        <details class="fc-faq" open><summary><h3>¿Cuál es la fecha de corte de la EUDR?</h3></summary><p>El Reglamento de la UE sobre deforestación (Reglamento (UE) 2023/1115) exige que el ganado bovino, el cacao, el café, la palma aceitera, el caucho, la soja y la madera, así como los productos derivados, que se comercialicen en la UE estén libres de deforestación: producidos en tierras que no hayan sido deforestadas después del 31 de diciembre de 2020.</p></details>
+        <details class="fc-faq"><summary><h3>¿Qué tengo que hacer para cumplir con la EUDR?</h3></summary><p>Según el artículo 9, debes reunir información sobre cada producto: la materia prima y la cantidad, el proveedor, el país de producción, la geolocalización de todas las parcelas y pruebas de que está libre de deforestación (como esta verificación) y de que se produjo legalmente. Salvo que todos tus productos procedan de países clasificados como de riesgo bajo, donde se aplica un procedimiento simplificado (artículo 13), también debes evaluar el riesgo (artículo 10) y, si no es insignificante, reducirlo (artículo 11). Por último, presentas una declaración de diligencia debida (DDS) en el Sistema de Información de la UE, en la plataforma TRACES, antes de comercializar los productos en la UE o exportarlos.</p></details>
+        <details class="fc-faq"><summary><h3>¿Qué comprueba esta herramienta EUDR gratuita?</h3></summary><p>Para cada parcela indica si había bosque en 2020 según el mapa JRC Global Forest Cover 2020 (versión 4, resolución de 10 m), el mapa de bosques publicado por la Comisión Europea para apoyar la EUDR, junto con la superficie de bosque en hectáreas y su porcentaje en la parcela.</p></details>
+        <details class="fc-faq"><summary><h3>¿Qué formatos de archivo puedo subir?</h3></summary><p>GeoJSON, shapefiles comprimidos, GeoPackage y KML o KMZ (por ejemplo de Google Earth), también dentro de un archivo ZIP. Funciona cualquier sistema de coordenadas, siempre que el archivo indique cuál usa. Las parcelas pueden ser polígonos o puntos: según la EUDR, un solo punto basta para parcelas de menos de 4 hectáreas.</p></details>
+        <details class="fc-faq"><summary><h3>¿Se suben mis archivos a algún sitio?</h3></summary><p>No. Tu propio navegador lee y analiza los archivos. La ubicación de tus parcelas no se envía ni a nosotros ni a nadie.</p></details>
+        <details class="fc-faq"><summary><h3>¿Es jurídicamente vinculante el mapa de bosques del JRC?</h3></summary><p>No. El mapa es una ayuda para la evaluación de riesgos, no una referencia jurídica, y tiene errores conocidos, por ejemplo con sistemas agroforestales. Que una parcela tuviera bosque en 2020 no significa por sí solo un incumplimiento, y la ausencia de bosque en el mapa no demuestra el cumplimiento.</p></details>
+        <details class="fc-faq"><summary><h3>¿Qué hago si se encuentra bosque en mis parcelas?</h3></summary><p>Revisa con más detalle antes de sacar conclusiones. Verificamos las parcelas señaladas con imágenes satelitales de alta resolución y series temporales, distinguimos el bosque de los sistemas agroforestales y las plantaciones, y documentamos la evidencia para tu diligencia debida.</p></details>
+        <details class="fc-faq"><summary><h3>¿Es gratis y cuántas parcelas puedo comprobar?</h3></summary><p>La comprobación es gratuita y no requiere cuenta; solo se pide un registro gratuito para descargar los resultados. Puedes comprobar miles de parcelas a la vez, siempre que cada una tenga menos de 100 000 ha.</p></details>
+        <details class="fc-faq"><summary><h3>¿Qué regiones están cubiertas?</h3></summary><p>Los trópicos y subtrópicos, de donde proceden principalmente las materias primas de la EUDR. No se incluyen: todo lo que está al norte de 60° N (norte de Canadá, Alaska, Groenlandia, norte de Escandinavia y Rusia) ni Europa y Asia entre 50° y 60° N. Las parcelas allí se marcan como «Fuera de cobertura».</p></details>
+        <p class="fc-cite">Mapa de bosques: Comisión Europea, Centro Común de Investigación (JRC), Global Forest Cover 2020 (GFC2020), versión 4,
+          <a href="https://forest-observatory.ec.europa.eu/" target="_blank" rel="noopener">Observatorio de la UE sobre deforestación y degradación forestal</a>.
+          Imágenes satelitales: Mapbox, Maxar; Sentinel-2 cloudless 2016 de EOX (datos Copernicus Sentinel).</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="wrap">
+      <div class="contact">
+        <h2>¿Parcelas señaladas? Revisémoslas en detalle.</h2>
+        <p>Verificamos las parcelas señaladas con imágenes de alta resolución y series temporales, distinguimos el bosque de los sistemas agroforestales y las plantaciones,
+          y entregamos evidencia lista para auditoría para tu diligencia debida EUDR.</p>
+        <div class="ctas">
+          <a class="btn" href="mailto:contact@geoanalyticslab.com?subject=Verificaci%C3%B3n%20EUDR">contact@geoanalyticslab.com</a>
+          <a class="btn ghost" href="https://wa.me/34604816443" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn ghost" href="../pillars/deforestation.html">Nuestros servicios EUDR</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<dialog class="fc-dialog" id="reg" aria-labelledby="reg-title">
+  <form id="reg-form" method="dialog" novalidate>
+    <button type="button" class="fc-close" id="reg-close" aria-label="Cerrar">×</button>
+    <p class="eyebrow">Descarga gratuita</p>
+    <h2 id="reg-title">Obtén tus resultados</h2>
+    <p class="fc-dialog-intro">Regístrate una vez para descargar los archivos CSV y GeoJSON con el resultado de cada parcela.</p>
+    <label class="fc-field">Nombre<input type="text" id="reg-name" name="name" autocomplete="name" required maxlength="100"></label>
+    <label class="fc-field">Organización<input type="text" id="reg-org" name="org" autocomplete="organization" required maxlength="150"></label>
+    <label class="fc-field">Correo profesional<input type="email" id="reg-email" name="email" autocomplete="email" required maxlength="254"></label>
+    <label class="fc-hp" aria-hidden="true">Website<input type="text" id="reg-website" name="website" tabindex="-1" autocomplete="off"></label>
+    <label class="fc-check"><input type="checkbox" id="reg-consent" required>
+      <span>Acepto que GeoAnalytics Lab reciba mi nombre, organización y correo, junto con un resumen de mis resultados:
+        solo el porcentaje de parcelas con y sin bosque. La ubicación de mis parcelas y mis archivos no se comparten.</span></label>
+    <label class="fc-check"><input type="checkbox" id="reg-marketing">
+      <span>Envíame novedades ocasionales de GeoAnalytics Lab (opcional).</span></label>
+    <div id="reg-captcha" class="fc-captcha"></div>
+    <p class="fc-error" id="reg-error" role="alert"></p>
+    <button type="submit" class="btn" id="reg-submit">Registrarme y descargar</button>
+    <p class="fc-fineprint">GeoAnalytics Lab (Barcelona) usa estos datos solo para dar seguimiento a tu solicitud
+      y, si marcas la casilla, para enviarte novedades. Nunca los vendemos. Pídenos que los borremos cuando quieras:
+      <a href="mailto:contact@geoanalyticslab.com">contact@geoanalyticslab.com</a>.
+      <a href="/privacy.html" target="_blank" rel="noopener">Política de privacidad (en inglés)</a></p>
+  </form>
+</dialog>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="y">2026</span> GeoAnalytics Lab · Barcelona</span>
+    <span><a href="/es/forest-check/">Verificación EUDR gratuita</a> · <a href="/privacy.html">Privacidad</a> · geoanalyticslab.com</span>
+  </div>
+</footer>
+
+<script src="/site.js"></script>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script type="module" src="/forest-check/app.js"></script>
+</body>
+</html>

@@ -181,3 +181,19 @@ body[data-step="3"] .fc-steps [data-step="2"]::before { background: var(--brand)
 .fc-issues .ok { color: var(--fc-clear); font-weight: 500; margin-left: 6px; }
 .fc-flag { color: var(--fc-forest); cursor: help; }
 #tbl td:last-child { white-space: normal; min-width: 6.5em; }   /* result labels may wrap rather than be cut off */
+
+/* Key benefits under the intro */
+.fc-usps { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 22px 0 0; padding: 0; }
+.fc-usps li { padding: 6px 12px 6px 30px; border-radius: 999px; font-size: 14px; color: var(--ink); background: var(--surface); border: 1px solid var(--line); position: relative; }
+.fc-usps li::before { content: ""; position: absolute; left: 12px; top: 50%; width: 10px; height: 6px; margin-top: -5px;
+  border-left: 2px solid var(--brand); border-bottom: 2px solid var(--brand); transform: rotate(-45deg); }
+
+/* FAQ */
+.fc-faq { border-bottom: 1px solid var(--line); }
+.fc-faq:first-of-type { margin-top: 24px; border-top: 1px solid var(--line); }
+.fc-faq summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 0; cursor: pointer; list-style: none; }
+.fc-faq summary::-webkit-details-marker { display: none; }
+.fc-faq summary::after { content: "+"; font: 400 24px/1 Inter, sans-serif; color: var(--brand); flex: none; }
+.fc-faq[open] summary::after { content: "–"; }
+.fc-faq summary h3 { font-size: 19px; margin: 0; }
+.fc-faq p { margin: 0 0 18px; }

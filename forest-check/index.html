@@ -3,23 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Free EUDR forest check · GeoAnalytics Lab</title>
-<meta name="description" content="Upload your plot geolocations (GeoJSON, Shapefile, GeoPackage or KML) and check them for forest against the JRC Global Forest Cover 2020 map, the EUDR reference year. Free, and your files never leave your computer.">
-<meta property="og:title" content="Free EUDR forest check · GeoAnalytics Lab">
-<meta property="og:description" content="Check your plots for forest in 2020, the EUDR cut-off year, against the JRC Global Forest Cover map. Free, and your files never leave your computer.">
+<title>Free EUDR Tool: Check Plots for Deforestation | GeoAnalytics Lab</title>
+<meta name="description" content="Free EUDR tool: check plot geolocations (GeoJSON, Shapefile, GeoPackage, KML) for forest in 2020 on the EU&#x27;s JRC map. No sign-up; files stay on your computer.">
+<meta property="og:title" content="Free EUDR tool: check your plots for deforestation">
+<meta property="og:description" content="Check your plot geolocations for forest in 2020, the EUDR cut-off year, on the EU&#x27;s official JRC forest map. Free, no sign-up, files stay on your computer.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://geoanalyticslab.com/forest-check/">
-<meta property="og:image" content="https://geoanalyticslab.com/pictures/forestPlantation.jpg">
+<meta property="og:image" content="https://geoanalyticslab.com/pictures/og-forest-check.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The free EUDR forest check showing plots on a satellite map with forest results">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://geoanalyticslab.com/forest-check/">
+<link rel="alternate" hreflang="en" href="https://geoanalyticslab.com/forest-check/">
+<link rel="alternate" hreflang="pt" href="https://geoanalyticslab.com/pt/forest-check/">
+<link rel="alternate" hreflang="es" href="https://geoanalyticslab.com/es/forest-check/">
+<link rel="alternate" hreflang="x-default" href="https://geoanalyticslab.com/forest-check/">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
-<link rel="icon" type="image/png" sizes="192x192" href="../pictures/favicon-192.png">
-<link rel="icon" type="image/png" sizes="96x96" href="../pictures/favicon-96.png">
-<link rel="apple-touch-icon" href="../pictures/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/pictures/favicon-192.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/pictures/favicon-96.png">
+<link rel="apple-touch-icon" href="/pictures/apple-touch-icon.png">
 <link rel="stylesheet" href="/fonts/fonts.css"><!-- self-hosted: no font requests to Google -->
-<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="/styles.css">
 <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css">
-<link rel="stylesheet" href="tool.css">
+<link rel="stylesheet" href="/forest-check/tool.css">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Free EUDR forest check", "alternateName": "Free EUDR tool", "url": "https://geoanalyticslab.com/forest-check/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any (web browser)", "browserRequirements": "A modern web browser", "isAccessibleForFree": true, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR"}, "description": "Free EUDR tool: check plot geolocations (GeoJSON, Shapefile, GeoPackage, KML) for forest in 2020 on the EU's JRC map. No sign-up; files stay on your computer.", "featureList": ["Check plot geolocations for forest in 2020 (EUDR cut-off)", "JRC Global Forest Cover 2020 v4 map, 10 m", "GeoJSON, Shapefile, GeoPackage, KML/KMZ, any coordinate system", "Polygons and points", "Files never leave your computer", "Results as CSV and GeoJSON"], "screenshot": "https://geoanalyticslab.com/pictures/og-forest-check.jpg", "provider": {"@type": "Organization", "name": "GeoAnalytics Lab", "url": "https://geoanalyticslab.com/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "GeoAnalytics Lab", "item": "https://geoanalyticslab.com/"}, {"@type": "ListItem", "position": 2, "name": "Forest monitoring & EUDR", "item": "https://geoanalyticslab.com/pillars/deforestation.html"}, {"@type": "ListItem", "position": 3, "name": "Free EUDR forest check", "item": "https://geoanalyticslab.com/forest-check/"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "What is the EUDR cut-off date?", "acceptedAnswer": {"@type": "Answer", "text": "The EU Deforestation Regulation (Regulation (EU) 2023/1115) requires that cattle, cocoa, coffee, oil palm, rubber, soya and wood, and products made from them, placed on the EU market are deforestation-free: produced on land that was not deforested after 31 December 2020."}}, {"@type": "Question", "name": "What do I need to do to comply with the EUDR?", "acceptedAnswer": {"@type": "Answer", "text": "Under Article 9 you collect information on each product: the commodity and quantity, the supplier, the country of production, the geolocation of every plot, and evidence that it is deforestation-free (such as this forest check) and was produced legally. Unless all your products come from countries classified as low risk, where a simplified procedure applies (Article 13), you must also assess the risk (Article 10) and, where it is not negligible, mitigate it (Article 11). Finally, you submit a due diligence statement (DDS) in the EU Information System, on the TRACES platform, before placing the products on the EU market or exporting them."}}, {"@type": "Question", "name": "What does this free EUDR tool check?", "acceptedAnswer": {"@type": "Answer", "text": "For every plot it reports whether there was forest in 2020 according to the JRC Global Forest Cover 2020 map (version 4, 10 m resolution), the forest map published by the European Commission to support the EUDR, together with the forest area in hectares and its share of the plot."}}, {"@type": "Question", "name": "Which file formats can I upload?", "acceptedAnswer": {"@type": "Answer", "text": "GeoJSON, zipped Shapefiles, GeoPackage and KML or KMZ (for example from Google Earth), also inside a ZIP file. Any coordinate system works, as long as the file says which one it uses. Plots can be polygons or points: under the EUDR, a single point is enough for plots smaller than 4 hectares."}}, {"@type": "Question", "name": "Are my files uploaded anywhere?", "acceptedAnswer": {"@type": "Answer", "text": "No. The files are read and analysed by your own browser. Your plot locations are not sent to us or to anyone else."}}, {"@type": "Question", "name": "Is the JRC forest map legally binding?", "acceptedAnswer": {"@type": "Answer", "text": "No. The map is an aid for risk assessment, not a legal reference, and it has known errors, for example with agroforestry. Forest in a plot in 2020 does not by itself mean non-compliance, and no forest in the map does not prove compliance."}}, {"@type": "Question", "name": "What should I do if forest is found in my plots?", "acceptedAnswer": {"@type": "Answer", "text": "Take a closer look before drawing conclusions. We verify flagged plots with high-resolution satellite imagery and time series, separate forest from agroforestry and plantations, and document the evidence for your due diligence."}}, {"@type": "Question", "name": "Is it free, and how many plots can I check?", "acceptedAnswer": {"@type": "Answer", "text": "Checking is free and needs no account; a free registration is only asked when you download the results. You can check thousands of plots at once, as long as each one is smaller than 100,000 ha."}}, {"@type": "Question", "name": "Which regions are covered?", "acceptedAnswer": {"@type": "Answer", "text": "The tropics and subtropics, where EUDR commodities mainly come from. Not included: everything north of 60° N (northern Canada, Alaska, Greenland, northern Scandinavia and Russia), and Europe and Asia between 50° and 60° N. Plots there are marked “Outside coverage”."}}]}</script>
 </head>
 <body>
 <a class="skip" href="#top">Skip to content</a>
@@ -38,6 +48,7 @@
       <li><a href="../index.html#partners">Partners</a></li>
       <li><a href="../index.html#about">About</a></li>
       <li class="gh"><a href="https://github.com/coelho85" target="_blank" rel="noopener" aria-label="GitHub"><svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>GitHub</a></li>
+      <li class="lang" aria-label="Language"><a href="/forest-check/" hreflang="en" lang="en" aria-label="English" aria-current="page">EN</a><a href="/pt/forest-check/" hreflang="pt" lang="pt-BR" aria-label="Português">PT</a><a href="/es/forest-check/" hreflang="es" lang="es" aria-label="Español">ES</a></li>
       <li><a class="btn" href="#contact">Get in touch</a></li>
     </ul>
   </div>
@@ -48,10 +59,14 @@
     <div class="wrap">
       <a class="crumb" href="../pillars/deforestation.html"><span aria-hidden="true">←</span> Forest monitoring &amp; EUDR</a>
       <p class="eyebrow">Free tool · EUDR screening</p>
-      <h1>Free EUDR forest check</h1>
+      <h1>Free EUDR deforestation check</h1>
       <p class="lead">Upload your plot geolocations and see in seconds which plots contain forest in the
         JRC Global Forest Cover 2020 map, the EU's reference map for the EUDR cut-off date.
         <strong>Your files never leave your computer</strong>: the whole analysis runs in your browser.</p>
+      <ul class="fc-usps" aria-label="Why use this tool">
+        <li>Free, no sign-up to check</li><li>Files stay on your computer</li><li>Official EU (JRC) forest map</li>
+        <li>GeoJSON · Shapefile · GeoPackage · KML</li><li>Polygons and points</li>
+      </ul>
       <p class="fc-verdict">No forest in your plots in 2020? Then the EUDR deforestation requirement is likely met.
         Forest found? <a href="#contact">Contact us</a> for a closer look.</p>
     </div>
@@ -64,9 +79,9 @@
         <li data-step="1"><span class="fc-num" aria-hidden="true">1</span><div><h3>Upload your plots</h3>
           <p>Polygons or points as GeoJSON, zipped Shapefile, GeoPackage or KML, in any coordinate system. Or try the example plots.</p></div></li>
         <li data-step="2"><span class="fc-num" aria-hidden="true">2</span><div><h3>Check in your browser</h3>
-          <p>Your browser reads only the parts of the 10 m JRC forest map that overlap your plots and counts the forest pixels in each one.</p></div></li>
+          <p>Your browser reads the parts of the 10 m JRC forest map that overlap your plots and counts the forest pixels in each one.</p></div></li>
         <li data-step="3"><span class="fc-num" aria-hidden="true">3</span><div><h3>Review &amp; download</h3>
-          <p>See every plot on satellite imagery, click a row to zoom in, and download the results as CSV and GeoJSON.</p></div></li>
+          <p>See every plot on satellite imagery, click a row to zoom in, and download the results as CSV and GeoJSON, the format required by the EUDR.</p></div></li>
       </ol>
       <div class="fc-main">
       <div class="fc-card">
@@ -126,18 +141,17 @@
   <section>
     <div class="wrap">
       <div class="prose">
-        <p class="eyebrow">Good to know</p>
-        <h2>A first screening, not a verdict.</h2>
-        <p><strong>What is checked.</strong> Forest presence in 2020 in the JRC Global Forest Cover 2020 map, version 4 (10 m resolution).
-          A map pixel counts when its centre lies inside the plot. Points are checked at their exact location.</p>
-        <p><strong>What it means.</strong> Forest in a plot in 2020 does not by itself mean non-compliance, and no forest in the map
-          does not prove compliance. The JRC map is not legally binding and has known errors, for example with agroforestry,
-          plantations and tree crops. Plots flagged here deserve a closer look with higher-resolution imagery and time series.</p>
-        <p><strong>Coverage.</strong> The tool covers the regions EUDR commodities mainly come from. Not included: everything north
-          of 60° N (northern Canada, Alaska, Greenland, northern Scandinavia and Russia), and Europe and Asia between 50° and 60° N.
-          Plots there are marked "Outside coverage".</p>
-        <p><strong>Privacy.</strong> Your files are read and analysed by your own browser. Only small pieces of the public forest map are
-          downloaded; your plot geometries are not sent anywhere.</p>
+        <p class="eyebrow">Questions &amp; answers</p>
+        <h2>About the free EUDR forest check.</h2>
+        <details class="fc-faq" open><summary><h3>What is the EUDR cut-off date?</h3></summary><p>The EU Deforestation Regulation (Regulation (EU) 2023/1115) requires that cattle, cocoa, coffee, oil palm, rubber, soya and wood, and products made from them, placed on the EU market are deforestation-free: produced on land that was not deforested after 31 December 2020.</p></details>
+        <details class="fc-faq"><summary><h3>What do I need to do to comply with the EUDR?</h3></summary><p>Under Article 9 you collect information on each product: the commodity and quantity, the supplier, the country of production, the geolocation of every plot, and evidence that it is deforestation-free (such as this forest check) and was produced legally. Unless all your products come from countries classified as low risk, where a simplified procedure applies (Article 13), you must also assess the risk (Article 10) and, where it is not negligible, mitigate it (Article 11). Finally, you submit a due diligence statement (DDS) in the EU Information System, on the TRACES platform, before placing the products on the EU market or exporting them.</p></details>
+        <details class="fc-faq"><summary><h3>What does this free EUDR tool check?</h3></summary><p>For every plot it reports whether there was forest in 2020 according to the JRC Global Forest Cover 2020 map (version 4, 10 m resolution), the forest map published by the European Commission to support the EUDR, together with the forest area in hectares and its share of the plot.</p></details>
+        <details class="fc-faq"><summary><h3>Which file formats can I upload?</h3></summary><p>GeoJSON, zipped Shapefiles, GeoPackage and KML or KMZ (for example from Google Earth), also inside a ZIP file. Any coordinate system works, as long as the file says which one it uses. Plots can be polygons or points: under the EUDR, a single point is enough for plots smaller than 4 hectares.</p></details>
+        <details class="fc-faq"><summary><h3>Are my files uploaded anywhere?</h3></summary><p>No. The files are read and analysed by your own browser. Your plot locations are not sent to us or to anyone else.</p></details>
+        <details class="fc-faq"><summary><h3>Is the JRC forest map legally binding?</h3></summary><p>No. The map is an aid for risk assessment, not a legal reference, and it has known errors, for example with agroforestry. Forest in a plot in 2020 does not by itself mean non-compliance, and no forest in the map does not prove compliance.</p></details>
+        <details class="fc-faq"><summary><h3>What should I do if forest is found in my plots?</h3></summary><p>Take a closer look before drawing conclusions. We verify flagged plots with high-resolution satellite imagery and time series, separate forest from agroforestry and plantations, and document the evidence for your due diligence.</p></details>
+        <details class="fc-faq"><summary><h3>Is it free, and how many plots can I check?</h3></summary><p>Checking is free and needs no account; a free registration is only asked when you download the results. You can check thousands of plots at once, as long as each one is smaller than 100,000 ha.</p></details>
+        <details class="fc-faq"><summary><h3>Which regions are covered?</h3></summary><p>The tropics and subtropics, where EUDR commodities mainly come from. Not included: everything north of 60° N (northern Canada, Alaska, Greenland, northern Scandinavia and Russia), and Europe and Asia between 50° and 60° N. Plots there are marked “Outside coverage”.</p></details>
         <p class="fc-cite">Forest map: European Commission, Joint Research Centre (JRC), Global Forest Cover 2020 (GFC2020), version 4,
           <a href="https://forest-observatory.ec.europa.eu/" target="_blank" rel="noopener">EU Observatory on deforestation and forest degradation</a>.
           Satellite imagery: Mapbox, Maxar; Sentinel-2 cloudless 2016 by EOX (Copernicus Sentinel data).</p>
@@ -182,19 +196,19 @@
     <p class="fc-fineprint">GeoAnalytics Lab (Barcelona) uses these details only to follow up on your request
       and, if you tick the box, to send you updates. We never sell them. Ask us to delete them at any time:
       <a href="mailto:contact@geoanalyticslab.com">contact@geoanalyticslab.com</a>.
-      <a href="../privacy.html" target="_blank" rel="noopener">Privacy policy</a></p>
+      <a href="/privacy.html" target="_blank" rel="noopener">Privacy policy</a></p>
   </form>
 </dialog>
 
 <footer>
   <div class="wrap">
     <span>© <span id="y">2026</span> GeoAnalytics Lab · Barcelona</span>
-    <span><a href="/privacy.html">Privacy</a> · geoanalyticslab.com</span>
+    <span><a href="/forest-check/">Free EUDR check</a> · <a href="/privacy.html">Privacy</a> · geoanalyticslab.com</span>
   </div>
 </footer>
 
-<script src="../site.js"></script>
+<script src="/site.js"></script>
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
-<script type="module" src="app.js"></script>
+<script type="module" src="/forest-check/app.js"></script>
 </body>
 </html>
